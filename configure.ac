@@ -317,6 +317,7 @@ AC_CONFIG_FILES([
   liblog/android-log-$SYSTEMCORE_API_VERSION.pc
   libmincrypt/android-mincrypt-$SYSTEMCORE_API_VERSION.pc
   libnetutils/android-netutils-$SYSTEMCORE_API_VERSION.pc
+  libpackagelistparser/android-packagelistparser-$SYSTEMCORE_API_VERSION.pc
   libsparse/android-sparse-$SYSTEMCORE_API_VERSION.pc
   libsuspend/android-suspend-$SYSTEMCORE_API_VERSION.pc
   libsync/android-sync-$SYSTEMCORE_API_VERSION.pc

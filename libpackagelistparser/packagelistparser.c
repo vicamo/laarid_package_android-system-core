@@ -24,10 +24,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <sys/limits.h>
+#include <stdint.h>
 
 #define LOG_TAG "packagelistparser"
-#include <utils/Log.h>
+#include <log/log.h>
 
 #include <packagelistparser/packagelistparser.h>
 
@@ -37,6 +37,9 @@
             ALOGE(fmt, ##__VA_ARGS__);\
         }\
     } while(0)
+
+#define GID_MAX UINT32_MAX
+#define UID_MAX UINT32_MAX
 
 static size_t get_gid_cnt(const char *gids)
 {

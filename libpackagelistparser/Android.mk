@@ -1,32 +1,21 @@
-LOCAL_PATH:= $(call my-dir)
+lib_LTLIBRARIES += \
+	%reldir%/libandroid-packagelistparser.la
 
-#########################
-include $(CLEAR_VARS)
+%canon_reldir%_libandroid_packagelistparser_la_CPPFLAGS = \
+	$(AM_CPPFLAGS) \
+	$(BIONIC_CFLAGS) \
+	-I$(top_srcdir)/%reldir%/include
+%canon_reldir%_libandroid_packagelistparser_la_SOURCES = \
+	%reldir%/packagelistparser.c
+%canon_reldir%_libandroid_packagelistparser_la_LIBADD = \
+	liblog/libandroid-log.la
+%canon_reldir%_libandroid_packagelistparser_la_LDFLAGS = \
+	$(AM_LDFLAGS) \
+	$(libtool_opts)
 
-LOCAL_MODULE := libpackagelistparser
-LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := packagelistparser.c
-LOCAL_SHARED_LIBRARIES := liblog
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
-LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
+%canon_reldir%_libandroid_packagelistparser_incdir = $(androidincdir)/packagelistparser
+%canon_reldir%_libandroid_packagelistparser_inc_HEADERS = \
+	%reldir%/include/packagelistparser/packagelistparser.h
 
-LOCAL_CLANG := true
-LOCAL_SANITIZE := integer
-
-include $(BUILD_SHARED_LIBRARY)
-
-#########################
-include $(CLEAR_VARS)
-
-
-LOCAL_MODULE := libpackagelistparser
-LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := packagelistparser.c
-LOCAL_STATIC_LIBRARIES := liblog
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
-LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
-
-LOCAL_CLANG := true
-LOCAL_SANITIZE := integer
-
-include $(BUILD_STATIC_LIBRARY)
+pkgconfig_DATA += \
+	%reldir%/android-packagelistparser-$(SYSTEMCORE_API_VERSION).pc

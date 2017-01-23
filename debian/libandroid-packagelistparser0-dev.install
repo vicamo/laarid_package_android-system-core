@@ -1,0 +1,4 @@
+usr/include/android/system-core-*/packagelistparser
+usr/lib/*/libandroid-packagelistparser.a
+usr/lib/*/libandroid-packagelistparser.so
+usr/lib/*/pkgconfig/android-packagelistparser-*.pc

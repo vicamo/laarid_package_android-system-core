@@ -151,6 +151,32 @@ Depends: ${shlibs:Depends},
 Description: Android libion
  This package contains libion built from Android platform/system/core.
 
+Package: libandroid-packagelistparser0-dev
+Priority: extra
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libandroid-packagelistparser0 (= ${binary:Version}),
+         libandroid-log0-dev,
+         ${misc:Depends}
+Description: Android libpackagelistparser - development
+ This package contains libpackagelistparser built from Android
+ platform/system/core.
+ .
+ This package contains the development files.
+
+Package: libandroid-packagelistparser0
+Priority: extra
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Android libpackagelistparser
+ This package contains libpackagelistparser built from Android
+ platform/system/core.
+
 Package: libandroid-sync0-dev
 Priority: extra
 Section: libdevel
