@@ -30,6 +30,7 @@
 #include <cstdint>
 #include <memory>
 #include <mutex>
+#include <string.h>
 
 #include "android-base/macros.h"
 

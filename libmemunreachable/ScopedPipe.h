@@ -17,6 +17,7 @@
 #ifndef LIBMEMUNREACHABLE_SCOPED_PIPE_H_
 #define LIBMEMUNREACHABLE_SCOPED_PIPE_H_
 
+#include <fcntl.h>
 #include <unistd.h>
 
 #include "log.h"

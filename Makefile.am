@@ -94,6 +94,9 @@ include $(srcdir)/libsuspend/Android.mk
 include $(srcdir)/libsysutils/Android.mk
 include $(srcdir)/libusbhost/Android.mk
 
+# Stage 1-4: depends on any of above packages
+include $(srcdir)/libmemunreachable/Android.mk
+
 # PKG-CONFIG data files
 # ---------------------
 pkgconfigdir = $(libdir)/pkgconfig
