@@ -28,6 +28,7 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <sys/wait.h>
+#include <linux/ptrace.h>
 
 #include <map>
 #include <memory>

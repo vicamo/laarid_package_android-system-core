@@ -17,6 +17,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <inttypes.h>
+#include <limits.h> // for PTHREAD_STACK_MIN
 #include <pthread.h>
 #include <sched.h>
 #include <stddef.h>

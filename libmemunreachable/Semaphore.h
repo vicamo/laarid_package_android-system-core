@@ -18,6 +18,7 @@
 #define LIBMEMUNREACHABLE_SEMAPHORE_H_
 
 #include <chrono>
+#include <condition_variable>
 #include <mutex>
 
 #include "android-base/macros.h"
