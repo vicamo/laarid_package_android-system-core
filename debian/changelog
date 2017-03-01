@@ -1,3 +1,17 @@
+android-system-core (0.0.15) stretch; urgency=low
+
+  * debian: rename logwrapper to libandroid-logwrap0-bin
+  * use getprogname from bionic
+  * remove private/android_filesystem_capability.h
+  * build libandroid-packagelistparser
+  * build libandroid-nativeloader
+  * build android-apropd
+  * add getprop/setprop
+  * libutils: add back missed NativeHandle.cpp
+  * libpixelflinger: fix armel build
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Wed, 1 Mar 2017 15:17:16 +0800
+
 android-system-core (0.0.14) stretch; urgency=low
 
   * unite stage1 & stage2
