@@ -6,26 +6,46 @@ language: cpp
 
 env:
   matrix:
-  - JOB_ARCH=amd64 JOB_TASK=deb
-  - JOB_ARCH=amd64 JOB_TASK=distcheck
-  - JOB_ARCH=arm64 JOB_TASK=deb
-  - JOB_ARCH=arm64 JOB_TASK=distcheck
-  - JOB_ARCH=armel JOB_TASK=deb
-  - JOB_ARCH=armel JOB_TASK=distcheck
-  - JOB_ARCH=armhf JOB_TASK=deb
-  - JOB_ARCH=armhf JOB_TASK=distcheck
-  - JOB_ARCH=i386 JOB_TASK=deb
-  - JOB_ARCH=i386 JOB_TASK=distcheck
-  - JOB_ARCH=mips JOB_TASK=deb
-  - JOB_ARCH=mips JOB_TASK=distcheck
-  - JOB_ARCH=mips64el JOB_TASK=deb
-  - JOB_ARCH=mips64el JOB_TASK=distcheck
-  - JOB_ARCH=mipsel JOB_TASK=deb
-  - JOB_ARCH=mipsel JOB_TASK=distcheck
-  - JOB_ARCH=ppc64el JOB_TASK=deb
-  - JOB_ARCH=ppc64el JOB_TASK=distcheck
-  - JOB_ARCH=s390x JOB_TASK=deb
-  - JOB_ARCH=s390x JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=amd64 JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=amd64 JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=arm64 JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=arm64 JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=armel JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=armel JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=armhf JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=armhf JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=i386 JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=i386 JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=mips JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=mips JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=mipsel JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=mipsel JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=ppc64el JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=ppc64el JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=s390x JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=s390x JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=amd64 JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=amd64 JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=arm64 JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=arm64 JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=armel JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=armel JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=armhf JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=armhf JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=i386 JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=i386 JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=mips JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=mips JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=mipsel JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=mipsel JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=ppc64el JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=ppc64el JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=distcheck
   global:
   - DOCKER_EXEC_ROOT="sudo docker exec --interactive --tty --user root test_container"
   - DOCKER_EXEC="sudo docker exec --interactive --tty test_container"
@@ -34,12 +54,14 @@ env:
   - BINTRAY_REPO=main
   - BINTRAY_COMPONENT=main
   - BINTRAY_DESC="Android system core libraries"
-  - BUILD_STAGE=1
 
 matrix:
   fast_finish: true
   allow_failures:
-  - env: JOB_ARCH=mips64el JOB_TASK=deb
+  - env: JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=deb
+  - env: JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=deb
+  - env: JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=deb
+  - env: JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=distcheck
 
 branches:
   only:
@@ -76,7 +98,7 @@ install:
 - ${DOCKER_EXEC_ROOT} apt-get update -qq
 - |
   ${DOCKER_EXEC_ROOT} \
-    env "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${BUILD_STAGE}" \
+    env "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${JOB_STAGE}" \
     mk-build-deps --install --remove \
       --root-cmd sudo \
       --tool 'apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends -y --allow-unauthenticated'
@@ -87,7 +109,7 @@ script:
   case "${JOB_TASK}" in
     deb)
       ${DOCKER_EXEC} env \
-          "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${BUILD_STAGE} nocheck" \
+          "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${JOB_STAGE} nocheck" \
           "DEB_BUILD_OPTIONS=nocheck" \
         debuild \
           --set-envvar CC="ccache gcc" \
@@ -95,7 +117,7 @@ script:
           -i -us -uc -b;
       ;;
     distcheck)
-      ${DOCKER_EXEC} /bin/sh -c "(export CC=\"ccache gcc\" CXX=\"ccache g++\"; mkdir build && cd build && autoreconf -i --warnings=all .. && ../configure --build=\$(dpkg-architecture -qDEB_BUILD_GNU_TYPE) --host=\$(dpkg-architecture -qDEB_HOST_GNU_TYPE) --with-stage=${BUILD_STAGE} --disable-dependency-tracking && make -j \$(nproc) .gitignore distcheck)";
+      ${DOCKER_EXEC} /bin/sh -c "(export CC=\"ccache gcc\" CXX=\"ccache g++\"; mkdir build && cd build && autoreconf -i --warnings=all .. && ../configure --build=\$(dpkg-architecture -qDEB_BUILD_GNU_TYPE) --host=\$(dpkg-architecture -qDEB_HOST_GNU_TYPE) --with-stage=${JOB_STAGE} --disable-dependency-tracking && make -j \$(nproc) .gitignore distcheck)";
       ;;
   esac
 - ${DOCKER_EXEC} ccache --show-stats
