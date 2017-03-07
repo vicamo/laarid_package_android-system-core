@@ -44,13 +44,16 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = \
 	-Wall -Werror \
+	-Wa,--noexecstack \
 	-std=gnu11
 
 AM_CXXFLAGS = \
 	-Wall -Werror \
+	-Wa,--noexecstack \
 	-std=gnu++11
 
 AM_LDFLAGS = \
+	-Wl,-z,noexecstack \
 	-Wl,--as-needed
 
 libtool_opts = \
