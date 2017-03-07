@@ -6,26 +6,46 @@ language: cpp
 
 env:
   matrix:
-  - BUILD_FLAVOR=amd64_deb
-  - BUILD_FLAVOR=amd64_distcheck
-  - BUILD_FLAVOR=arm64_deb
-  - BUILD_FLAVOR=arm64_distcheck
-  - BUILD_FLAVOR=armel_deb
-  - BUILD_FLAVOR=armel_distcheck
-  - BUILD_FLAVOR=armhf_deb
-  - BUILD_FLAVOR=armhf_distcheck
-  - BUILD_FLAVOR=i386_deb
-  - BUILD_FLAVOR=i386_distcheck
-  - BUILD_FLAVOR=mips_deb
-  - BUILD_FLAVOR=mips_distcheck
-  - BUILD_FLAVOR=mips64el_deb
-  - BUILD_FLAVOR=mips64el_distcheck
-  - BUILD_FLAVOR=mipsel_deb
-  - BUILD_FLAVOR=mipsel_distcheck
-  - BUILD_FLAVOR=ppc64el_deb
-  - BUILD_FLAVOR=ppc64el_distcheck
-  - BUILD_FLAVOR=s390x_deb
-  - BUILD_FLAVOR=s390x_distcheck
+  - JOB_STAGE=1 JOB_ARCH=amd64 JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=amd64 JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=arm64 JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=arm64 JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=armel JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=armel JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=armhf JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=armhf JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=i386 JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=i386 JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=mips JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=mips JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=mipsel JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=mipsel JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=ppc64el JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=ppc64el JOB_TASK=distcheck
+  - JOB_STAGE=1 JOB_ARCH=s390x JOB_TASK=deb
+  - JOB_STAGE=1 JOB_ARCH=s390x JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=amd64 JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=amd64 JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=arm64 JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=arm64 JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=armel JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=armel JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=armhf JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=armhf JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=i386 JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=i386 JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=mips JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=mips JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=mipsel JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=mipsel JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=ppc64el JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=ppc64el JOB_TASK=distcheck
+  - JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=deb
+  - JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=distcheck
   global:
   - DOCKER_EXEC_ROOT="sudo docker exec --interactive --tty --user root test_container"
   - DOCKER_EXEC="sudo docker exec --interactive --tty test_container"
@@ -34,12 +54,14 @@ env:
   - BINTRAY_REPO=main
   - BINTRAY_COMPONENT=main
   - BINTRAY_DESC="Android system core libraries"
-  - BUILD_STAGE=1
 
 matrix:
   fast_finish: true
   allow_failures:
-  - env: BUILD_FLAVOR=mips64el_deb
+  - env: JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=deb
+  - env: JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=deb
+  - env: JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=deb
+  - env: JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=distcheck
 
 branches:
   only:
@@ -56,38 +78,49 @@ addons:
 
 cache:
 - apt
+- ccache
 
 before_install:
-- sudo docker pull laarid/devel:${BUILD_FLAVOR%_*}
+- test -d "${HOME}/.ccache/${JOB_ARCH}" || mkdir -p "${HOME}/.ccache/${JOB_ARCH}"
+- sudo docker pull laarid/devel:${JOB_ARCH}
 - sudo docker images
 - |
   sudo docker run --detach --interactive --tty \
     --name test_container \
     --volume ${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}}:${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}} \
+    --volume ${HOME}/.ccache/${JOB_ARCH}:/home/laarid/.ccache \
     --workdir ${TRAVIS_BUILD_DIR} \
     --add-host dl.bintray.com:$(nslookup dl.bintray.com | grep -m1 -A1 Name: | grep Address: | awk '{print $2}') \
-    laarid/devel:${BUILD_FLAVOR%_*} \
+    laarid/devel:${JOB_ARCH} \
     /bin/bash
 
 install:
 - ${DOCKER_EXEC_ROOT} apt-get update -qq
 - |
   ${DOCKER_EXEC_ROOT} \
-    env "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${BUILD_STAGE}" \
+    env "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${JOB_STAGE}" \
     mk-build-deps --install --remove \
       --root-cmd sudo \
       --tool 'apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends -y --allow-unauthenticated'
 
 script:
+- ${DOCKER_EXEC} ccache --zero-stats
 - |
-  case "${BUILD_FLAVOR#*_}" in
+  case "${JOB_TASK}" in
     deb)
-      ${DOCKER_EXEC} env "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${BUILD_STAGE} nocheck" "DEB_BUILD_OPTIONS=nocheck" debuild -i -us -uc -b;
+      ${DOCKER_EXEC} env \
+          "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${JOB_STAGE} nocheck" \
+          "DEB_BUILD_OPTIONS=nocheck" \
+        debuild \
+          --set-envvar CC="ccache gcc" \
+          --set-envvar CXX="ccache g++" \
+          -i -us -uc -b;
       ;;
     distcheck)
-      ${DOCKER_EXEC} /bin/sh -c "(mkdir build && cd build && autoreconf -i --warnings=all .. && ../configure --build=\$(dpkg-architecture -qDEB_BUILD_GNU_TYPE) --host=\$(dpkg-architecture -qDEB_HOST_GNU_TYPE) --with-stage=${BUILD_STAGE} --disable-dependency-tracking && make -j \$(nproc) .gitignore distcheck)";
+      ${DOCKER_EXEC} /bin/sh -c "(export CC=\"ccache gcc\" CXX=\"ccache g++\"; mkdir build && cd build && autoreconf -i --warnings=all .. && ../configure --build=\$(dpkg-architecture -qDEB_BUILD_GNU_TYPE) --host=\$(dpkg-architecture -qDEB_HOST_GNU_TYPE) --with-stage=${JOB_STAGE} --disable-dependency-tracking && make -j \$(nproc) .gitignore distcheck)";
       ;;
   esac
+- ${DOCKER_EXEC} ccache --show-stats
 - git status
 - git status | grep 'working tree clean'
 
@@ -116,7 +149,7 @@ deploy:
     secure: "qZmynoFS3xYdDANotC/PtUNobxs/vakivZ7YxSZsHjSH2KI/9AaLLHqm57Gjh9DgvNu84PnsBnlb8H2aWkwiZuuJpYyLOFV2hUE384oLuOb/84N2P3R9uf+ru0+AjavzrMH2mNQpG6+XS3KNT08a7nBcWTrNSFsV2QGkhb3+BUQnv/SMAP1b3nh/0AcbRe9yGsE9jeQDG6hmZjDH+DjbApIdZ2WWfd4fAyFgqZHoGsN4yOwr41BwVBbXKTxyC1DQxstGazyq1ezNdNTJixVMuHW7qliHuKcUMYeC0PNNGoKI7pRkfI3q0SarkOiVqaOtwWP8u1Y0GZ+5ZLWcN2xmjHH/v4MgvpoIkVUxAto4cWEN7EfAATzV1IvpVxq2EPOgjCxOfqdLI9Qv/paJ7a7AOb/g+dV8brTRP1RJ2OPMrVdt6MKINRLjs0GCXtjkszEwdjv57L/9BgHg0WCQRGMrPMAFKxSlG9H5jfj0hlhMAOgQBsoUmacpdboPiF8fXOMrE9T3CiWmO3KZERbfahUzGj55DTxNt9XaFy7cYPZFEAw6c6t1mtAUyirPaMEZ/UjZHC1tqChJB4+qT+uLAVICq4ihUy7ZA0PUfT/WfyIjxQpXG+yet1tdlXbIOmvgShpPyo1Sc0VUawqFUJlFcLNeYfx2OtDUvggAt5dQLQd2G+8="
   on:
     tags: true
-    condition: ${BUILD_FLAVOR#*_} = deb
+    condition: ${JOB_TASK} = deb
 
 notifications:
   slack:
