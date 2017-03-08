@@ -383,7 +383,8 @@ AC_LANG_POP()
 AM_CONDITIONAL([HAVE_GTEST], [test "x${with_gtest}" != xno])
 
 dnl Whether should we run ION unit tests
-AC_CHECK_FILE([/dev/ion])
+AS_IF([test "x${cross_compiling}" != xyes],
+  [AC_CHECK_FILE([/dev/ion])])
 AM_CONDITIONAL([HAVE_DEV_ION], [test "x${c_cv_file_dev_ion}" = xyes])
 
 AC_CONFIG_FILES([
