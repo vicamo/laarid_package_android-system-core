@@ -112,12 +112,10 @@ script:
           "DEB_BUILD_PROFILES=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${JOB_STAGE} nocheck" \
           "DEB_BUILD_OPTIONS=nocheck" \
         debuild \
-          --set-envvar CC="ccache gcc" \
-          --set-envvar CXX="ccache g++" \
           -i -us -uc -b;
       ;;
     distcheck)
-      ${DOCKER_EXEC} /bin/sh -c "(export CC=\"ccache gcc\" CXX=\"ccache g++\"; mkdir build && cd build && autoreconf -i --warnings=all .. && ../configure --build=\$(dpkg-architecture -qDEB_BUILD_GNU_TYPE) --host=\$(dpkg-architecture -qDEB_HOST_GNU_TYPE) --with-stage=${JOB_STAGE} --disable-dependency-tracking && make -j \$(nproc) .gitignore distcheck)";
+      ${DOCKER_EXEC} /bin/sh -c "(mkdir build && cd build && autoreconf -i --warnings=all .. && ../configure --build=\$(dpkg-architecture -qDEB_BUILD_GNU_TYPE) --host=\$(dpkg-architecture -qDEB_HOST_GNU_TYPE) --with-stage=${JOB_STAGE} --disable-dependency-tracking && make -j \$(nproc) .gitignore distcheck)";
       ;;
   esac
 - ${DOCKER_EXEC} ccache --show-stats

@@ -12,7 +12,7 @@ ifeq ($(filter pkg.android-system-core.stage2,$(DEB_BUILD_PROFILES)),)
 DH_ADDITIONAL_FLAGS += -with systemd
 endif
 
-CONFFLAGS =
+CONFFLAGS = --with-ccache
 
 ifneq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 CONFFLAGS += --without-gtest

@@ -116,6 +116,7 @@ AM_PROG_AR
 AM_PROG_AS
 AC_PROG_CC
 AC_PROG_CXX
+LAARID_CHECK_CCACHE
 
 # libtool versioning
 # ------------------
