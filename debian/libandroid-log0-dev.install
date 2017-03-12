@@ -1,4 +1,4 @@
-usr/include/android/system-core-*/android
+usr/include/android/system-core-*/android/log.h
 usr/include/android/system-core-*/log
 usr/lib/*/libandroid-log.a
 usr/lib/*/libandroid-log.so

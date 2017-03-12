@@ -22,7 +22,8 @@ if WITH_STAGE_1
 
 %canon_reldir%_libandroid_android_incdir = $(androidincdir)/android
 %canon_reldir%_libandroid_android_inc_HEADERS = \
-	%reldir%/android/log.h
+	%reldir%/android/log.h \
+	%reldir%/android/uidmap.h
 
 # HEADERS: android/mincrypt
 # -------------------------

@@ -403,6 +403,7 @@ AS_IF([test "x${with_stage}" = x1], [AC_CONFIG_FILES([
   libsuspend/android-suspend-$LAARID_API_VERSION.pc
   libsync/android-sync-$LAARID_API_VERSION.pc
   libsysutils/android-sysutils-$LAARID_API_VERSION.pc
+  libuidmap/android-uidmap-$LAARID_API_VERSION.pc
   libusbhost/android-usbhost-$LAARID_API_VERSION.pc
   logwrapper/android-logwrap-$LAARID_API_VERSION.pc
   ])],

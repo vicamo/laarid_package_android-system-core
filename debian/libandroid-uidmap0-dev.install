@@ -1,0 +1,4 @@
+usr/include/android/system-core-*/android/uidmap.h
+usr/lib/*/libandroid-uidmap.a
+usr/lib/*/libandroid-uidmap.so
+usr/lib/*/pkgconfig/android-uidmap-*.pc

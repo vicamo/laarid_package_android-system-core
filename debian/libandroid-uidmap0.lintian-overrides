@@ -1,0 +1,2 @@
+# Only mips variants have this error. See https://github.com/laarid/package_android-system-core/issues/3
+libandroid-uidmap0 [mips mipsel mips64el] binary: shlib-without-PT_GNU_STACK-section usr/lib*/libandroid-uidmap.so.*

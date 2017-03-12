@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: android-uidmap-@LAARID_API_VERSION@
+Description: Android System Core Libraries - uidmap
+Version: @VERSION@
+Libs: -L${libdir} -landroid-uidmap
+Cflags: -I${includedir}/android/system-core-@LAARID_API_VERSION@
+

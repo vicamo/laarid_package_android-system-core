@@ -87,6 +87,9 @@ include $(srcdir)/include/Makefile.am
 #  libtool: install: error: relink `libandroid-cutils-0.la' with the above command before installing it
 
 if WITH_STAGE_1
+# Stage 1-0:
+include $(srcdir)/libuidmap/Makefile.am
+
 # Stage 1-1: depends on only external packages
 include $(srcdir)/liblog/Android.mk
 include $(srcdir)/libmincrypt/Android.mk

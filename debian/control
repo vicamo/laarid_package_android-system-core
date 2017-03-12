@@ -618,6 +618,35 @@ Description: Android libsysutils - development
  .
  This package contains the development files.
 
+Package: libandroid-uidmap0
+Build-Profiles: <!pkg.android-system-core.stage2>
+Priority: extra
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends:
+ ${misc:Pre-Depends},
+Depends:
+ adduser,
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Android libuidmap
+ This package contains libuidmap built from Android platform/system/core.
+
+Package: libandroid-uidmap0-dev
+Build-Profiles: <!pkg.android-system-core.stage2>
+Priority: extra
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends:
+ libandroid-uidmap0 (= ${binary:Version}),
+ ${misc:Depends},
+Description: Android libuidmap - development
+ This package contains libuidmap built from Android platform/system/core.
+ .
+ This package contains the development files.
+
 Package: libandroid-usbhost0
 Build-Profiles: <!pkg.android-system-core.stage2>
 Priority: extra
