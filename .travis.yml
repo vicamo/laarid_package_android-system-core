@@ -6,46 +6,46 @@ language: cpp
 
 env:
   matrix:
-  - JOB_STAGE=1 JOB_ARCH=amd64 JOB_TASK=deb
-  - JOB_STAGE=1 JOB_ARCH=amd64 JOB_TASK=distcheck
-  - JOB_STAGE=1 JOB_ARCH=arm64 JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=arm64 JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=armel JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=armel JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=armhf JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=armhf JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=i386 JOB_TASK=deb
-  - JOB_STAGE=1 JOB_ARCH=i386 JOB_TASK=distcheck
-  - JOB_STAGE=1 JOB_ARCH=mips JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=mips JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=mipsel JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=mipsel JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=ppc64el JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=ppc64el JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=s390x JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=1 JOB_ARCH=s390x JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=amd64 JOB_TASK=deb
-  - JOB_STAGE=2 JOB_ARCH=amd64 JOB_TASK=distcheck
-  - JOB_STAGE=2 JOB_ARCH=arm64 JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=arm64 JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=armel JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=armel JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=armhf JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=armhf JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=i386 JOB_TASK=deb
-  - JOB_STAGE=2 JOB_ARCH=i386 JOB_TASK=distcheck
-  - JOB_STAGE=2 JOB_ARCH=mips JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=mips JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=mipsel JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=mipsel JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=ppc64el JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=ppc64el JOB_TASK=distcheck JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=deb JOB_CROSS=1
-  - JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=distcheck JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=amd64
+  - JOB_STAGE=1 JOB_ARCH=amd64
+  - JOB_STAGE=1 JOB_ARCH=arm64 JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=arm64 JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=armel JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=armel JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=armhf JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=armhf JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=i386
+  - JOB_STAGE=1 JOB_ARCH=i386
+  - JOB_STAGE=1 JOB_ARCH=mips JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=mips JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=mips64el JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=mips64el JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=mipsel JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=mipsel JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=ppc64el JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=ppc64el JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=s390x JOB_CROSS=1
+  - JOB_STAGE=1 JOB_ARCH=s390x JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=amd64
+  - JOB_STAGE=2 JOB_ARCH=amd64
+  - JOB_STAGE=2 JOB_ARCH=arm64 JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=arm64 JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=armel JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=armel JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=armhf JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=armhf JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=i386
+  - JOB_STAGE=2 JOB_ARCH=i386
+  - JOB_STAGE=2 JOB_ARCH=mips JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=mips JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=mips64el JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=mips64el JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=mipsel JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=mipsel JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=ppc64el JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=ppc64el JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=s390x JOB_CROSS=1
+  - JOB_STAGE=2 JOB_ARCH=s390x JOB_CROSS=1
   global:
   - DOCKER_EXEC_ROOT="sudo docker exec --interactive --tty --user root test_container"
   - DOCKER_EXEC="sudo docker exec --interactive --tty test_container"
@@ -58,10 +58,10 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-  - env: JOB_STAGE=1 JOB_ARCH=mips64el JOB_TASK=deb JOB_CROSS=1
-  - env: JOB_STAGE=2 JOB_ARCH=mips64el JOB_TASK=deb JOB_CROSS=1
-  - env: JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=deb JOB_CROSS=1
-  - env: JOB_STAGE=2 JOB_ARCH=s390x JOB_TASK=distcheck JOB_CROSS=1
+  - env: JOB_STAGE=1 JOB_ARCH=mips64el JOB_CROSS=1
+  - env: JOB_STAGE=2 JOB_ARCH=mips64el JOB_CROSS=1
+  - env: JOB_STAGE=2 JOB_ARCH=s390x JOB_CROSS=1
+  - env: JOB_STAGE=2 JOB_ARCH=s390x JOB_CROSS=1
 
 branches:
   only:
@@ -105,19 +105,13 @@ install:
 script:
 - ${DOCKER_EXEC} ccache --zero-stats
 - |
-  case "${JOB_TASK}" in
-    deb)
-      ${DOCKER_EXEC} env \
-          "DEB_BUILD_OPTIONS=nocheck" \
-        dpkg-buildpackage \
-          --host-arch ${JOB_ARCH} \
-          --build-profiles=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${JOB_STAGE},nocheck \
-          -i -us -uc -b;
-      ;;
-    distcheck)
-      ${DOCKER_EXEC} /bin/sh -c "(mkdir build && cd build && autoreconf -i --warnings=all .. && ../configure --build=\$(dpkg-architecture -a ${JOB_ARCH} -qDEB_BUILD_GNU_TYPE) --host=\$(dpkg-architecture -a ${JOB_ARCH} -qDEB_HOST_GNU_TYPE) --with-stage=${JOB_STAGE} --disable-dependency-tracking && make -j \$(nproc) .gitignore distcheck)";
-      ;;
-  esac
+  ${DOCKER_EXEC} env \
+      "DEB_BUILD_OPTIONS=nocheck" \
+    dpkg-buildpackage \
+      --host-arch ${JOB_ARCH} \
+      --build-profiles=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${JOB_STAGE},nocheck \
+      -i -us -uc -b;
+- ${DOCKER_EXEC} make -C build -j $(nproc) .gitignore distcheck
 - ${DOCKER_EXEC} ccache --show-stats
 - git status
 - git status | grep 'working tree clean'
@@ -147,7 +141,6 @@ deploy:
     secure: "qZmynoFS3xYdDANotC/PtUNobxs/vakivZ7YxSZsHjSH2KI/9AaLLHqm57Gjh9DgvNu84PnsBnlb8H2aWkwiZuuJpYyLOFV2hUE384oLuOb/84N2P3R9uf+ru0+AjavzrMH2mNQpG6+XS3KNT08a7nBcWTrNSFsV2QGkhb3+BUQnv/SMAP1b3nh/0AcbRe9yGsE9jeQDG6hmZjDH+DjbApIdZ2WWfd4fAyFgqZHoGsN4yOwr41BwVBbXKTxyC1DQxstGazyq1ezNdNTJixVMuHW7qliHuKcUMYeC0PNNGoKI7pRkfI3q0SarkOiVqaOtwWP8u1Y0GZ+5ZLWcN2xmjHH/v4MgvpoIkVUxAto4cWEN7EfAATzV1IvpVxq2EPOgjCxOfqdLI9Qv/paJ7a7AOb/g+dV8brTRP1RJ2OPMrVdt6MKINRLjs0GCXtjkszEwdjv57L/9BgHg0WCQRGMrPMAFKxSlG9H5jfj0hlhMAOgQBsoUmacpdboPiF8fXOMrE9T3CiWmO3KZERbfahUzGj55DTxNt9XaFy7cYPZFEAw6c6t1mtAUyirPaMEZ/UjZHC1tqChJB4+qT+uLAVICq4ihUy7ZA0PUfT/WfyIjxQpXG+yet1tdlXbIOmvgShpPyo1Sc0VUawqFUJlFcLNeYfx2OtDUvggAt5dQLQd2G+8="
   on:
     tags: true
-    condition: ${JOB_TASK} = deb
 
 notifications:
   slack:
