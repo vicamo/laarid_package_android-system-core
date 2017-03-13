@@ -1,3 +1,9 @@
+android-system-core (0.0.16) stretch; urgency=low
+
+  * libandroid-uidmap: convert stage2
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Mon, 13 Mar 2017 12:04:26 +0800
+
 android-system-core (0.0.16~stage1) stretch; urgency=low
 
   * debian: add lintian override for libsync
