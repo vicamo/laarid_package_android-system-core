@@ -23,7 +23,7 @@
 #include <string.h>
 #include <sys/types.h>
 
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 #include <private/android_logger.h>
 
 #include "config_read.h"
@@ -71,7 +71,7 @@ static int pmsgAvailable(log_id_t logId)
 /* Determine the credentials of the caller */
 static bool uid_has_log_permission(uid_t uid)
 {
-    return (uid == AID_SYSTEM) || (uid == AID_LOG) || (uid == AID_ROOT);
+    return (uid == AUID_SYSTEM) || (uid == AUID_LOG) || (uid == AUID_ROOT);
 }
 
 static uid_t get_best_effective_uid()

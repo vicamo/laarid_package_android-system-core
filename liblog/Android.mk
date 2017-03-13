@@ -36,7 +36,8 @@ lib_LTLIBRARIES += \
 	-fvisibility=hidden
 %canon_reldir%_libandroid_log_la_LIBADD = \
 	$(PTHREAD_LIBS) -lpthread \
-	$(BIONIC_LIBS)
+	$(BIONIC_LIBS) \
+	libuidmap/libandroid-uidmap.la
 %canon_reldir%_libandroid_log_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(libtool_opts)

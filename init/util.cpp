@@ -24,6 +24,8 @@
 #include <time.h>
 #include <ftw.h>
 #include <limits.h>
+#include <pwd.h>
+#include <unistd.h>
 
 #if !defined(LAARID_APROPD)
 #include <selinux/selinux.h>
@@ -43,8 +45,6 @@
 #include <cutils/sockets.h>
 #include <android-base/stringprintf.h>
 
-#include <private/android_filesystem_config.h>
-
 #include "init.h"
 #include "log.h"
 #include "property_service.h"
@@ -56,13 +56,12 @@
  */
 static unsigned int android_name_to_id(const char *name)
 {
-    const struct android_id_info *info = android_ids;
-    unsigned int n;
+    struct passwd pwd, *pwdp = NULL;
+    long buf_len = sysconf(_SC_GETPW_R_SIZE_MAX);
+    char buf[buf_len];
 
-    for (n = 0; n < android_id_count; n++) {
-        if (!strcmp(info[n].name, name))
-            return info[n].aid;
-    }
+    if (0 == getpwnam_r(name, &pwd, buf, sizeof(buf), &pwdp))
+        return pwd.pw_uid;
 
     return UINT_MAX;
 }

@@ -19,6 +19,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>
+#include <pwd.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -26,11 +27,12 @@
 #include <string.h>
 #include <inttypes.h>
 #include <sys/param.h>
+#include <unistd.h>
 
 #include <cutils/list.h>
 #include <log/logd.h>
 #include <log/logprint.h>
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 
 #include "log_portability.h"
 
@@ -1351,17 +1353,12 @@ LIBLOG_ABI_PUBLIC char *android_log_formatLogLine (
     uid[0] = '\0';
     if (p_format->uid_output) {
         if (entry->uid >= 0) {
-            const struct android_id_info *info = android_ids;
-            size_t i;
+            struct passwd pwd, *pwdp = NULL;
+            long buf_len = sysconf(_SC_GETPW_R_SIZE_MAX);
+            char buf[buf_len];
 
-            for (i = 0; i < android_id_count; ++i) {
-                if (info->aid == (unsigned int)entry->uid) {
-                    break;
-                }
-                ++info;
-            }
-            if ((i < android_id_count) && (strlen(info->name) <= 5)) {
-                 snprintf(uid, sizeof(uid), "%5s:", info->name);
+            if (0 == getpwuid_r(entry->uid, &pwd, buf, sizeof(buf), &pwdp)) {
+                 snprintf(uid, sizeof(uid), "%5s:", pwd.pw_name);
             } else {
                  // Not worth parsing package list, names all longer than 5
                  snprintf(uid, sizeof(uid), "%5d:", entry->uid);

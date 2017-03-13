@@ -28,7 +28,7 @@
 #include <log/logd.h>
 #include <log/logger.h>
 #include <log/log_read.h>
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 #include <private/android_logger.h>
 
 #include "config_write.h"
@@ -54,17 +54,17 @@ static int check_log_uid_permissions()
     uid_t uid = __android_log_uid();
 
     /* Matches clientHasLogCredentials() in logd */
-    if ((uid != AID_SYSTEM) && (uid != AID_ROOT) && (uid != AID_LOG)) {
+    if ((uid != AUID_SYSTEM) && (uid != AUID_ROOT) && (uid != AUID_LOG)) {
         uid = geteuid();
-        if ((uid != AID_SYSTEM) && (uid != AID_ROOT) && (uid != AID_LOG)) {
+        if ((uid != AUID_SYSTEM) && (uid != AUID_ROOT) && (uid != AUID_LOG)) {
             gid_t gid = getgid();
-            if ((gid != AID_SYSTEM) &&
-                    (gid != AID_ROOT) &&
-                    (gid != AID_LOG)) {
+            if ((gid != AGID_SYSTEM) &&
+                    (gid != AGID_ROOT) &&
+                    (gid != AGID_LOG)) {
                 gid = getegid();
-                if ((gid != AID_SYSTEM) &&
-                        (gid != AID_ROOT) &&
-                        (gid != AID_LOG)) {
+                if ((gid != AGID_SYSTEM) &&
+                        (gid != AGID_ROOT) &&
+                        (gid != AGID_LOG)) {
                     int num_groups;
                     gid_t *groups;
 
@@ -78,7 +78,7 @@ static int check_log_uid_permissions()
                     }
                     num_groups = getgroups(num_groups, groups);
                     while (num_groups > 0) {
-                        if (groups[num_groups - 1] == AID_LOG) {
+                        if (groups[num_groups - 1] == AGID_LOG) {
                             break;
                         }
                         --num_groups;

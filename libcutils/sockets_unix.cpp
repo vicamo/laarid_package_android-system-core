@@ -34,7 +34,7 @@ typedef int  socklen_t;
 #include <log/log.h>
 
 /* For the socket trust (credentials) check */
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 
 bool socket_peer_is_trusted(int fd) {
     ucred cr;
@@ -46,7 +46,7 @@ bool socket_peer_is_trusted(int fd) {
         return false;
     }
 
-    if ((cr.uid != AID_ROOT) && (cr.uid != AID_SHELL)) {
+    if ((cr.uid != AUID_ROOT) && (cr.uid != AUID_SHELL)) {
         ALOGE("untrusted userid on other end of socket: userid %d\n", cr.uid);
         return false;
     }

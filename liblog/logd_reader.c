@@ -36,7 +36,7 @@
 #include <log/logd.h>
 #include <log/logger.h>
 #include <log/log_read.h>
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 #include <private/android_logger.h>
 
 #include "config_read.h"
@@ -99,7 +99,7 @@ static int logdAvailable(log_id_t logId)
     }
     if (logId == LOG_ID_SECURITY) {
         uid_t uid = __android_log_uid();
-        if (uid != AID_SYSTEM) {
+        if (uid != AUID_SYSTEM) {
             return -EPERM;
         }
     }
@@ -411,7 +411,7 @@ static int logdVersion(
         struct android_log_transport_context *transp __unused)
 {
     uid_t uid = __android_log_uid();
-    return ((uid != AID_ROOT) && (uid != AID_LOG) && (uid != AID_SYSTEM)) ? 3 : 4;
+    return ((uid != AUID_ROOT) && (uid != AUID_LOG) && (uid != AUID_SYSTEM)) ? 3 : 4;
 }
 
 /*

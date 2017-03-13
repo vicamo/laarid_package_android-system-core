@@ -22,18 +22,18 @@
 #include <pthread.h>
 #endif
 
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 
 #include "logger.h"
 
 LIBLOG_HIDDEN uid_t __android_log_uid()
 {
 #if defined(_WIN32)
-    return AID_SYSTEM;
+    return AUID_SYSTEM;
 #else
-    static uid_t last_uid = AID_ROOT; /* logd *always* starts up as AID_ROOT */
+    static uid_t last_uid = AUID_ROOT; /* logd *always* starts up as AUID_ROOT */
 
-    if (last_uid == AID_ROOT) { /* have we called to get the UID yet? */
+    if (last_uid == AUID_ROOT) { /* have we called to get the UID yet? */
         last_uid = getuid();
     }
     return last_uid;

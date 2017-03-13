@@ -28,7 +28,7 @@
 #include <log/log.h>
 #include <log/logger.h>
 
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 #include <private/android_logger.h>
 
 #include "config_write.h"

@@ -29,7 +29,6 @@
 #include <pthread.h>
 
 #include <logwrap/logwrap.h>
-#include "private/android_filesystem_config.h"
 #include "cutils/log.h"
 #include <cutils/klog.h>
 

@@ -54,7 +54,6 @@
 #include <cutils/list.h>
 #include <cutils/properties.h>
 #include <cutils/sockets.h>
-#include <private/android_filesystem_config.h>
 
 #include <memory>
 

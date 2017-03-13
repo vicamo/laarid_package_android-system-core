@@ -26,5 +26,6 @@ sbin_PROGRAMS += \
 
 %canon_reldir%_apropd_LDADD = \
     $(BIONIC_LIBS) \
+    libuidmap/libandroid-uidmap.la \
     libcutils/libandroid-cutils.la \
     base/libandroid-base.la

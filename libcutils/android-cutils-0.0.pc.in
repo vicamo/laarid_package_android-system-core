@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: android-cutils-@LAARID_API_VERSION@
 Description: Android System Core Libraries - cutils
 Version: @VERSION@
-Requires.private: android-log-@LAARID_API_VERSION@, android-bionic-@BIONIC_API_VERSION@ >= @BIONIC_REQUIRED_VERSION@
+Requires.private: android-uidmap-@LAARID_API_VERSION@, android-log-@LAARID_API_VERSION@, android-bionic-@BIONIC_API_VERSION@ >= @BIONIC_REQUIRED_VERSION@
 Libs: -L${libdir} -landroid-cutils
 Cflags: -I${includedir}/android/system-core-@LAARID_API_VERSION@

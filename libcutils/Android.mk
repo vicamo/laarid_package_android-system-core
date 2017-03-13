@@ -39,17 +39,16 @@ endif
 %canon_reldir%_libandroid_cutils_la_LIBADD = \
 	$(PTHREAD_LIBS) -lpthread\
 	$(BIONIC_LIBS) \
+	libuidmap/libandroid-uidmap.la \
 	liblog/libandroid-log.la
 %canon_reldir%_libandroid_cutils_la_DEPENDENCIES = \
 	liblog/libandroid-log.la
 %canon_reldir%_libandroid_cutils_la_SOURCES = \
 	%reldir%/android_reboot.c \
 	%reldir%/atomic.c \
-	%reldir%/canned_fs_config.c \
 	%reldir%/config_utils.c \
 	%reldir%/debugger.c \
 	%reldir%/fs.c \
-	%reldir%/fs_config.c \
 	%reldir%/hashmap.c \
 	%reldir%/iosched_policy.c \
 	%reldir%/klog.c \
@@ -116,9 +115,6 @@ endif # CPU_X86_64
 endif # CPU_X86
 endif # CPU_AARCH64
 endif # CPU_ARM
-
-EXTRA_DIST += \
-	$(srcdir)/include/private/canned_fs_config.h
 
 pkgconfig_DATA += \
 	%reldir%/android-cutils-$(LAARID_API_VERSION).pc

@@ -28,7 +28,7 @@
 #include <log/logger.h>
 #include <log/log_read.h>
 #include <log/logprint.h>
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 #include <private/android_logger.h>
 
 // enhanced version of LOG_FAILURE_RETRY to add support for EAGAIN and
@@ -376,18 +376,18 @@ TEST(liblog, __security_buffer) {
     uid_t uid = getuid();
     gid_t gid = getgid();
     bool clientHasLogCredentials = true;
-    if ((uid != AID_SYSTEM) && (uid != AID_ROOT) && (uid != AID_LOG)
-     && (gid != AID_SYSTEM) && (gid != AID_ROOT) && (gid != AID_LOG)) {
+    if ((uid != AUID_SYSTEM) && (uid != AUID_ROOT) && (uid != AUID_LOG)
+     && (gid != AGID_SYSTEM) && (gid != AGID_ROOT) && (gid != AGID_LOG)) {
         uid_t euid = geteuid();
-        if ((euid != AID_SYSTEM) && (euid != AID_ROOT) && (euid != AID_LOG)) {
+        if ((euid != AUID_SYSTEM) && (euid != AUID_ROOT) && (euid != AUID_LOG)) {
             gid_t egid = getegid();
-            if ((egid != AID_SYSTEM) && (egid != AID_ROOT) && (egid != AID_LOG)) {
+            if ((egid != AGID_SYSTEM) && (egid != AGID_ROOT) && (egid != AGID_LOG)) {
                 int num_groups = getgroups(0, NULL);
                 if (num_groups > 0) {
                     gid_t groups[num_groups];
                     num_groups = getgroups(num_groups, groups);
                     while (num_groups > 0) {
-                        if (groups[num_groups - 1] == AID_LOG) {
+                        if (groups[num_groups - 1] == AGID_LOG) {
                             break;
                         }
                         --num_groups;
@@ -461,7 +461,7 @@ TEST(liblog, __security_buffer) {
 
     android_logger_list_close(logger_list);
 
-    bool clientHasSecurityCredentials = (uid == AID_SYSTEM) || (gid == AID_SYSTEM);
+    bool clientHasSecurityCredentials = (uid == AUID_SYSTEM) || (gid == AGID_SYSTEM);
     if (!clientHasSecurityCredentials) {
         fprintf(stderr, "WARNING: "
                 "not system, content submitted but can not check end-to-end\n");
