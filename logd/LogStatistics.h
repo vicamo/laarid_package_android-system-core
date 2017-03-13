@@ -27,7 +27,7 @@
 
 #include <android-base/stringprintf.h>
 #include <log/log.h>
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 
 #include "LogBufferElement.h"
 #include "LogUtils.h"
@@ -60,7 +60,7 @@ public:
         for(const_iterator it = map.begin(); it != map.end(); ++it) {
             const TEntry &entry = it->second;
 
-            if ((uid != AID_ROOT) && (uid != entry.getUid())) {
+            if ((uid != AUID_ROOT) && (uid != entry.getUid())) {
                 continue;
             }
             if (pid && entry.getPid() && (pid != entry.getPid())) {

@@ -16,8 +16,6 @@
 
 #include <stdlib.h>
 
-#include <private/android_filesystem_config.h>
-
 #include "FlushCommand.h"
 #include "LogBuffer.h"
 #include "LogBufferElement.h"
@@ -98,7 +96,7 @@ bool FlushCommand::hasReadLogs(SocketClient *client) {
 }
 
 static bool clientHasSecurityCredentials(SocketClient *client) {
-    return (client->getUid() == AID_SYSTEM) || (client->getGid() == AID_SYSTEM);
+    return (client->getUid() == AUID_SYSTEM) || (client->getGid() == AGID_SYSTEM);
 }
 
 bool FlushCommand::hasSecurityLogs(SocketClient *client) {

@@ -32,6 +32,7 @@
 #include <sys/types.h>
 #include <syslog.h>
 #include <unistd.h>
+#include <grp.h>
 
 #include <cstdbool>
 #include <memory>
@@ -42,7 +43,6 @@
 #include <cutils/klog.h>
 #include <log/event_tag_map.h>
 #include <packagelistparser/packagelistparser.h>
-#include <private/android_filesystem_config.h>
 #include <utils/threads.h>
 
 #include "CommandListener.h"
@@ -57,6 +57,13 @@
     '0' + LOG_MAKEPRI(LOG_DAEMON, LOG_PRI(PRI)) / 10, \
     '0' + LOG_MAKEPRI(LOG_DAEMON, LOG_PRI(PRI)) % 10, \
     '>'
+
+__BEGIN_DECLS
+int capset(cap_user_header_t hdrp, const cap_user_data_t datap);
+__END_DECLS
+
+ANDROID_UID_GETTER_IMPL(logd)
+ANDROID_GID_GETTER_IMPL(logd)
 
 //
 //  The service is designed to be run by init, it does not respond well
@@ -107,17 +114,17 @@ static int drop_privs() {
         return -1;
     }
 
-    gid_t groups[] = { AID_READPROC };
+    gid_t groups[] = { AGID_READPROC };
 
     if (setgroups(sizeof(groups) / sizeof(groups[0]), groups) == -1) {
         return -1;
     }
 
-    if (setgid(AID_LOGD) != 0) {
+    if (setgid(AGID_LOGD) != 0) {
         return -1;
     }
 
-    if (setuid(AID_LOGD) != 0) {
+    if (setuid(AUID_LOGD) != 0) {
         return -1;
     }
 
@@ -253,8 +260,10 @@ static void *reinit_thread_start(void * /*obj*/) {
             // If we are AID_ROOT, we should drop to AID_SYSTEM, if we are anything
             // else, we have even lesser privileges and accept our fate. Not worth
             // checking for error returns setting this thread's privileges.
-            (void)setgid(AID_SYSTEM);
-            (void)setuid(AID_SYSTEM);
+            if (setgid(AGID_SYSTEM) < 0)
+                perror(strerror(errno));
+            if (setuid(AUID_SYSTEM) < 0)
+                perror(strerror(errno));
         }
 
         // uidToName Privileged Worker

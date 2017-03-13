@@ -23,6 +23,12 @@ case "$1" in
           --gecos "Android $username account" --group $username;
       fi;
     done
+
+    for groupname in readproc; do
+      if ! getent group $groupname >/dev/null; then
+        addgroup --quiet --system $groupname;
+      fi;
+    done
   ;;
   abort-upgrade|abort-remove|abort-deconfigure)
   ;;

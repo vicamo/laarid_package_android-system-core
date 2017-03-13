@@ -31,6 +31,7 @@
 #include "LogBuffer.h"
 #include "LogKlog.h"
 #include "LogReader.h"
+#include "LogUtils.h"
 
 // Default
 #define LOG_BUFFER_SIZE (256 * 1024) // Tuned with ro.logd.size per-platform
@@ -357,7 +358,7 @@ LogBufferElementCollection::iterator LogBuffer::erase(
         }
     }
 
-    if (element->getUid() == AID_SYSTEM) {
+    if (element->getUid() == AUID_SYSTEM) {
         // start of scope for pid found iterator
         LogBufferPidIteratorMap::iterator found =
             mLastWorstPidOfSystem[id].find(element->getPid());
@@ -542,7 +543,7 @@ bool LogBuffer::prune(log_id_t id, unsigned long pruneRows, uid_t caller_uid) {
 
     LogBufferElementCollection::iterator it;
 
-    if (caller_uid != AID_ROOT) {
+    if (caller_uid != AUID_ROOT) {
         // Only here if clearAll condition (pruneRows == ULONG_MAX)
         it = mLastSet[id] ? mLast[id] : mLogElements.begin();
         while (it != mLogElements.end()) {
@@ -587,7 +588,7 @@ bool LogBuffer::prune(log_id_t id, unsigned long pruneRows, uid_t caller_uid) {
         if (worstUidEnabledForLogid(id) && mPrune.worstUidEnabled()) {
             {   // begin scope for UID sorted list
                 std::unique_ptr<const UidEntry *[]> sorted = stats.sort(
-                    AID_ROOT, (pid_t)0, 2, id);
+                    AUID_ROOT, (pid_t)0, 2, id);
 
                 if (sorted.get() && sorted[0] && sorted[1]) {
                     worst_sizes = sorted[0]->getSizes();
@@ -606,7 +607,7 @@ bool LogBuffer::prune(log_id_t id, unsigned long pruneRows, uid_t caller_uid) {
                 }
             }
 
-            if ((worst == AID_SYSTEM) && mPrune.worstPidOfSystemEnabled()) {
+            if ((worst == AUID_SYSTEM) && mPrune.worstPidOfSystemEnabled()) {
                 // begin scope of PID sorted list
                 std::unique_ptr<const PidEntry *[]> sorted = stats.sort(
                     worst, (pid_t)0, 2, id, worst);

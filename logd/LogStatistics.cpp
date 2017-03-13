@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <pwd.h>
 
 #include <log/logger.h>
 
@@ -77,7 +78,7 @@ void LogStatistics::add(LogBufferElement *element) {
     }
 
     uidTable[log_id].add(element->getUid(), element);
-    if (element->getUid() == AID_SYSTEM) {
+    if (element->getUid() == AUID_SYSTEM) {
         pidSystemTable[log_id].add(element->getPid(), element);
     }
 
@@ -112,7 +113,7 @@ void LogStatistics::subtract(LogBufferElement *element) {
     }
 
     uidTable[log_id].subtract(element->getUid(), element);
-    if (element->getUid() == AID_SYSTEM) {
+    if (element->getUid() == AUID_SYSTEM) {
         pidSystemTable[log_id].subtract(element->getPid(), element);
     }
 
@@ -142,7 +143,7 @@ void LogStatistics::drop(LogBufferElement *element) {
     ++mDroppedElements[log_id];
 
     uidTable[log_id].drop(element->getUid(), element);
-    if (element->getUid() == AID_SYSTEM) {
+    if (element->getUid() == AUID_SYSTEM) {
         pidSystemTable[log_id].drop(element->getPid(), element);
     }
 
@@ -157,18 +158,17 @@ void LogStatistics::drop(LogBufferElement *element) {
 // caller must own and free character string
 const char *LogStatistics::uidToName(uid_t uid) const {
     // Local hard coded favourites
-    if (uid == AID_LOGD) {
+    if (uid == AUID_LOGD) {
         return strdup("auditd");
     }
 
     // Android hard coded
-    const struct android_id_info *info = android_ids;
+    struct passwd pwd, *pwdp = NULL;
+    long buf_len = sysconf(_SC_GETPW_R_SIZE_MAX);
+    char buf[buf_len];
 
-    for (size_t i = 0; i < android_id_count; ++i) {
-        if (info->aid == uid) {
-            return strdup(info->name);
-        }
-        ++info;
+    if (0 == getpwuid_r(uid, &pwd, buf, sizeof(buf), &pwdp)) {
+        return strdup(pwd.pw_name);
     }
 
     // Parse /data/system/packages.list
@@ -286,7 +286,7 @@ std::string UidEntry::format(const LogStatistics &stat, log_id_t id) const {
 
     std::string output = formatLine(name, size, pruned);
 
-    if (uid != AID_SYSTEM) {
+    if (uid != AUID_SYSTEM) {
         return output;
     }
 
@@ -506,14 +506,14 @@ std::string LogStatistics::format(uid_t uid, pid_t pid,
             continue;
         }
 
-        name = (uid == AID_ROOT)
+        name = (uid == AUID_ROOT)
             ? "Chattiest UIDs in %s log buffer:"
             : "Logging for your UID in %s log buffer:";
         output += uidTable[id].format(*this, uid, pid, name, id);
     }
 
     if (enable) {
-        name = ((uid == AID_ROOT) && !pid)
+        name = ((uid == AUID_ROOT) && !pid)
             ? "Chattiest PIDs:"
             : "Logging for this PID:";
         output += pidTable.format(*this, uid, pid, name);
@@ -562,7 +562,7 @@ uid_t pidToUid(pid_t pid) {
         }
         fclose(fp);
     }
-    return AID_LOGD; // associate this with the logger
+    return AUID_LOGD; // associate this with the logger
 }
 
 }

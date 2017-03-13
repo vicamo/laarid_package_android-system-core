@@ -26,7 +26,6 @@
 #include <syslog.h>
 
 #include <log/logger.h>
-#include <private/android_filesystem_config.h>
 #include <private/android_logger.h>
 
 #include "libaudit.h"
@@ -34,6 +33,7 @@
 #include "LogBuffer.h"
 #include "LogKlog.h"
 #include "LogReader.h"
+#include "LogUtils.h"
 
 #define KMSG_PRIORITY(PRI)                          \
     '<',                                            \
@@ -116,7 +116,7 @@ int LogAudit::logPrint(const char *fmt, ...) {
 
     pid_t pid = getpid();
     pid_t tid = gettid();
-    uid_t uid = AID_LOGD;
+    uid_t uid = AUID_LOGD;
     log_time now;
 
     static const char audit_str[] = " audit(";

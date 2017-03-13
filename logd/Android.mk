@@ -45,6 +45,7 @@ sbin_PROGRAMS += \
 %canon_reldir%_logd_LDADD = \
     $(ATOMIC_LIBS) \
     $(BIONIC_LIBS) \
+    libuidmap/libandroid-uidmap.la \
     libsysutils/libandroid-sysutils.la \
     liblog/libandroid-log.la \
     libcutils/libandroid-cutils.la \

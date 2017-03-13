@@ -22,10 +22,9 @@
 #include <list>
 #include <string>
 
+#include <android/uidmap.h>
 #include <log/log.h>
 #include <sysutils/SocketClient.h>
-
-#include <private/android_filesystem_config.h>
 
 #include "LogBufferElement.h"
 #include "LogTimes.h"
@@ -87,7 +86,7 @@ public:
                      int (*filter)(const LogBufferElement *element, void *arg) = NULL,
                      void *arg = NULL);
 
-    bool clear(log_id_t id, uid_t uid = AID_ROOT);
+    bool clear(log_id_t id, uid_t uid = AUID_ROOT);
     unsigned long getSize(log_id_t id);
     int setSize(log_id_t id, unsigned long size);
     unsigned long getSizeUsed(log_id_t id);
@@ -114,7 +113,7 @@ private:
     static constexpr size_t maxPrune = 256;
 
     void maybePrune(log_id_t id);
-    bool prune(log_id_t id, unsigned long pruneRows, uid_t uid = AID_ROOT);
+    bool prune(log_id_t id, unsigned long pruneRows, uid_t uid = AUID_ROOT);
     LogBufferElementCollection::iterator erase(
         LogBufferElementCollection::iterator it, bool coalesce = false);
 };
