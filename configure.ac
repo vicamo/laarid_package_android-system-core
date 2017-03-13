@@ -24,7 +24,7 @@
 #   laarid_interface_revision = 0
 m4_define([laarid_major_version], [0])
 m4_define([laarid_minor_version], [0])
-m4_define([laarid_micro_version], [15])
+m4_define([laarid_micro_version], [16])
 m4_define([laarid_interface_revision], [0])
 m4_define([laarid_api_version], [laarid_major_version.0])
 m4_define([laarid_release_number], [laarid_major_version])

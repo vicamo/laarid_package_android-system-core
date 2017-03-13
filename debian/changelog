@@ -1,3 +1,12 @@
+android-system-core (0.0.16~stage1) stretch; urgency=low
+
+  * debian: add lintian override for libsync
+  * ci: enable cross build
+  * libcutils: fix shlib-with-executable-stack
+  * add libandroid-uidmap
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Mon, 13 Mar 2017 11:09:28 +0800
+
 android-system-core (0.0.15) stretch; urgency=low
 
   * debian: rename logwrapper to libandroid-logwrap0-bin
