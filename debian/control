@@ -120,8 +120,9 @@ Architecture: any
 Multi-Arch: same
 Depends:
  libandroid-cutils0 (= ${binary:Version}),
- libandroid-log0-dev,
  libandroid-bionic0-dev (>= 0.1.6),
+ libandroid-log0-dev,
+ libandroid-uidmap0-dev,
  ${misc:Depends},
 Description: Android libcutils - development
  This package contains libcutils built from Android platform/system/core.
@@ -211,6 +212,7 @@ Multi-Arch: same
 Depends:
  libandroid-log0 (= ${binary:Version}),
  libandroid-bionic0-dev (>= 0.1.6),
+ libandroid-uidmap0-dev,
  ${misc:Depends},
 Description: Android liblog - development
  This package contains liblog built from Android platform/system/core.

@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: android-logwrap-@LAARID_API_VERSION@
 Description: Android System Core Libraries - logwrap
 Version: @VERSION@
-Requires.private: android-uidmap-@LAARID_API_VERSION@, android-log-@LAARID_API_VERSION@, android-cutils-@LAARID_API_VERSION@
+Requires.private: android-log-@LAARID_API_VERSION@, android-cutils-@LAARID_API_VERSION@
 Libs: -L${libdir} -landroid-logwrap
 Cflags: -I${includedir}/android/system-core-@LAARID_API_VERSION@
