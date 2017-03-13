@@ -6,5 +6,5 @@ includedir=@includedir@
 Name: android-processgroup-@LAARID_API_VERSION@
 Description: Android System Core Libraries - processgroup
 Version: @VERSION@
-Requires.private: android-bionic-@BIONIC_API_VERSION@ >= @BIONIC_REQUIRED_VERSION@, android-log-@LOG_API_VERSION@ >= @LOG_REQUIRED_VERSION@, android-utils-@LAARID_API_VERSION@
+Requires.private: android-bionic-@BIONIC_API_VERSION@ >= @BIONIC_REQUIRED_VERSION@, android-uidmap-@UIDMAP_API_VERSION@ >= @UIDMAP_REQUIRED_VERSION@, android-log-@LOG_API_VERSION@ >= @LOG_REQUIRED_VERSION@, android-utils-@LAARID_API_VERSION@
 Libs: -L${libdir} -landroid-processgroup

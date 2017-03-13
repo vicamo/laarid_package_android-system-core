@@ -12,6 +12,7 @@ Build-Depends:
  libandroid-cutils0-dev (>= 0.0.12) <pkg.android-system-core.stage2>,
  libandroid-log0-dev (>= 0.0.12) <pkg.android-system-core.stage2>,
  libandroid-nativehelper0-dev (>= 0.0.4) <pkg.android-system-core.stage2>,
+ libandroid-uidmap0-dev (>= 0.0.16~stage1) <pkg.android-system-core.stage2>,
  libandroid-unwind8-dev (>= 0.0.3) <pkg.android-system-core.stage2>,
  libgtest-dev <!debbuildopt.nocheck>,
  libltdl-dev,
@@ -464,6 +465,7 @@ Depends:
  libandroid-processgroup0 (= ${binary:Version}),
  libandroid-bionic0-dev (>= 0.1.6),
  libandroid-log0-dev (>= 0.0.12),
+ libandroid-uidmap0-dev,
  libandroid-utils0-dev,
  ${misc:Depends},
 Description: Android libprocessgroup - development

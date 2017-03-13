@@ -34,7 +34,7 @@
 #include <bionic/bionic.h> /* for strlcat */
 
 #include <log/log.h>
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 
 #include <utils/Compat.h>
 #include <utils/SystemClock.h>
@@ -346,7 +346,7 @@ int createProcessGroup(uid_t uid, int initialPid)
 
     convertUidToPath(path, sizeof(path), uid);
 
-    ret = mkdirAndChown(path, 0750, AID_SYSTEM, AID_SYSTEM);
+    ret = mkdirAndChown(path, 0750, AUID_SYSTEM, AGID_SYSTEM);
     if (ret < 0) {
         SLOGE("failed to make and chown %s: %s", path, strerror(-ret));
         return ret;
@@ -354,7 +354,7 @@ int createProcessGroup(uid_t uid, int initialPid)
 
     convertUidPidToPath(path, sizeof(path), uid, initialPid);
 
-    ret = mkdirAndChown(path, 0750, AID_SYSTEM, AID_SYSTEM);
+    ret = mkdirAndChown(path, 0750, AUID_SYSTEM, AGID_SYSTEM);
     if (ret < 0) {
         SLOGE("failed to make and chown %s: %s", path, strerror(-ret));
         return ret;

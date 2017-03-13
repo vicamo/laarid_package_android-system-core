@@ -13,6 +13,7 @@ lib_LTLIBRARIES += \
 %canon_reldir%_libandroid_processgroup_la_LIBADD = \
 	$(LOG_LIBS) \
 	$(BIONIC_LIBS) \
+	$(UIDMAP_LIBS) \
 	libutils/libandroid-utils.la
 %canon_reldir%_libandroid_processgroup_la_SOURCES = \
 	%reldir%/include/processgroup/processgroup.h \
