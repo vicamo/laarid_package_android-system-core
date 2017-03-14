@@ -9,7 +9,7 @@ include /usr/share/dpkg/default.mk
 
 DH_ADDITIONAL_FLAGS =
 ifeq ($(filter pkg.android-system-core.stage2,$(DEB_BUILD_PROFILES)),)
-DH_ADDITIONAL_FLAGS += -with systemd
+DH_ADDITIONAL_FLAGS += --with systemd
 endif
 
 CONFFLAGS = --with-ccache
