@@ -1,0 +1,11 @@
+[Unit]
+Description=Android logd administrative command socket
+
+[Socket]
+ListenStream=/run/logd
+SocketUser=logd
+SocketGroup=logd
+SocketMode=0666
+
+[Install]
+WantedBy=sockets.target

@@ -112,6 +112,8 @@ include $(srcdir)/libusbhost/Android.mk
 
 # Stage 1-4: depends on any of above packages
 include $(srcdir)/init/Android.mk
+include $(srcdir)/logcat/Android.mk
+include $(srcdir)/logd/Android.mk
 else
 if WITH_STAGE_2
 # Stage 2-1: depends on external packages that depend on stage 0 packages

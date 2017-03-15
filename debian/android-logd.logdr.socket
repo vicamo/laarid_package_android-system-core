@@ -1,0 +1,12 @@
+[Unit]
+Description=Android logd read-only socket
+
+[Socket]
+ListenSequentialPacket=/run/logdr
+Service=logd.service
+SocketUser=logd
+SocketGroup=logd
+SocketMode=0666
+
+[Install]
+WantedBy=sockets.target

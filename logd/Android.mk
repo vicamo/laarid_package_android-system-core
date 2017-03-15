@@ -1,34 +1,55 @@
-LOCAL_PATH:= $(call my-dir)
+sbin_PROGRAMS += \
+    %reldir%/logd
 
-include $(CLEAR_VARS)
+%canon_reldir%_logd_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    $(BIONIC_CFLAGS) \
+    -I$(srcdir)/base/include \
+    -Ilibpackagelistparser/include
+# For logd/libaudit.c
+%canon_reldir%_logd_CFLAGS = \
+    $(AM_CFLAGS) \
+    -Wno-strict-aliasing
+%canon_reldir%_logd_SOURCES = \
+    %reldir%/main.cpp \
+    %reldir%/LogCommand.cpp \
+    %reldir%/LogCommand.h \
+    %reldir%/CommandListener.cpp \
+    %reldir%/CommandListener.h \
+    %reldir%/LogListener.cpp \
+    %reldir%/LogListener.h \
+    %reldir%/LogReader.cpp \
+    %reldir%/LogReader.h \
+    %reldir%/FlushCommand.cpp \
+    %reldir%/FlushCommand.h \
+    %reldir%/LogBuffer.cpp \
+    %reldir%/LogBuffer.h \
+    %reldir%/LogBufferElement.cpp \
+    %reldir%/LogBufferElement.h \
+    %reldir%/LogTimes.cpp \
+    %reldir%/LogTimes.h \
+    %reldir%/LogStatistics.cpp \
+    %reldir%/LogStatistics.h \
+    %reldir%/LogWhiteBlackList.cpp \
+    %reldir%/LogWhiteBlackList.h \
+    %reldir%/libaudit.c \
+    %reldir%/libaudit.h \
+    %reldir%/LogAudit.cpp \
+    %reldir%/LogAudit.h \
+    %reldir%/LogKlog.cpp \
+    %reldir%/LogKlog.h \
+    %reldir%/LogUtils.h
 
-LOCAL_MODULE:= logd
-
-LOCAL_INIT_RC := logd.rc
-
-LOCAL_SRC_FILES := \
-    main.cpp \
-    LogCommand.cpp \
-    CommandListener.cpp \
-    LogListener.cpp \
-    LogReader.cpp \
-    FlushCommand.cpp \
-    LogBuffer.cpp \
-    LogBufferElement.cpp \
-    LogTimes.cpp \
-    LogStatistics.cpp \
-    LogWhiteBlackList.cpp \
-    libaudit.c \
-    LogAudit.cpp \
-    LogKlog.cpp \
-    event.logtags
-
-LOCAL_SHARED_LIBRARIES := \
-    libsysutils \
-    liblog \
-    libcutils \
-    libbase \
-    libpackagelistparser
+# TODO: https://github.com/laarid/package_android-system-core/issues/29
+#    event.logtags
+%canon_reldir%_logd_LDADD = \
+    $(ATOMIC_LIBS) \
+    $(BIONIC_LIBS) \
+    libsysutils/libandroid-sysutils.la \
+    liblog/libandroid-log.la \
+    libcutils/libandroid-cutils.la \
+    base/libandroid-base.la \
+    libpackagelistparser/libandroid-packagelistparser.la
 
 # This is what we want to do:
 #  event_logtags = $(shell \
@@ -38,10 +59,7 @@ LOCAL_SHARED_LIBRARIES := \
 #  event_flag := $(call event_logtags,auditd)
 #  event_flag += $(call event_logtags,logd)
 # so make sure we do not regret hard-coding it as follows:
-event_flag := -DAUDITD_LOG_TAG=1003 -DLOGD_LOG_TAG=1004
+%canon_reldir%_logd_CPPFLAGS += \
+    -DAUDITD_LOG_TAG=1003 -DLOGD_LOG_TAG=1004
 
-LOCAL_CFLAGS := -Werror $(event_flag)
-
-include $(BUILD_EXECUTABLE)
-
-include $(call first-makefiles-under,$(LOCAL_PATH))
+include $(srcdir)/logd/tests/Android.mk

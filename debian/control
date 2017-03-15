@@ -14,9 +14,11 @@ Build-Depends:
  libandroid-nativehelper0-dev (>= 0.0.4) <pkg.android-system-core.stage2>,
  libandroid-uidmap0-dev (>= 0.0.16~stage1) <pkg.android-system-core.stage2>,
  libandroid-unwind8-dev (>= 0.0.3) <pkg.android-system-core.stage2>,
+ libatomic1 <!pkg.android-system-core.stage2>,
  libgtest-dev <!debbuildopt.nocheck>,
  libltdl-dev,
  libnl-3-dev <!pkg.android-system-core.stage2>,
+ libpcre3-dev <!pkg.android-system-core.stage2>,
  libsafe-iop-dev <pkg.android-system-core.stage2>,
  libsystemd-dev <!pkg.android-system-core.stage2>,
  zlib1g-dev,
@@ -25,6 +27,21 @@ Section: libs
 Homepage: https://github.com/laarid/package_android-system-core
 Vcs-Git: https://github.com/laarid/package_android-system-core.git
 Vcs-Browser: https://github.com/laarid/package_android-system-core
+
+Package: android-logd
+Build-Profiles: <!pkg.android-system-core.stage2>
+Priority: extra
+Section: misc
+Architecture: any
+Multi-Arch: no
+Depends:
+ adduser,
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Android liblog - daemons
+ This package contains libsparse built from Android platform/system/core.
+ .
+ This package contains logd and logcat.
 
 Package: android-propd
 Build-Profiles: <!pkg.android-system-core.stage2>
@@ -202,6 +219,8 @@ Pre-Depends:
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
+Recommends:
+ android-logd,
 Description: Android liblog
  This package contains liblog built from Android platform/system/core.
 

@@ -14,35 +14,28 @@
 # limitations under the License.
 #
 
-LOCAL_PATH := $(call my-dir)
+if HAVE_GTEST
+check_PROGRAMS += \
+    %reldir%/logd-unit-tests
 
-# -----------------------------------------------------------------------------
-# Benchmarks. (see ../../liblog/tests)
-# -----------------------------------------------------------------------------
+#TESTS += \
+#    %reldir%/logd-unit-tests
 
-test_module_prefix := logd-
-test_tags := tests
-
-# -----------------------------------------------------------------------------
-# Unit tests.
-# -----------------------------------------------------------------------------
-
-test_c_flags := \
-    -fstack-protector-all \
-    -g \
-    -Wall -Wextra \
-    -Werror \
-    -fno-builtin \
-
-test_src_files := \
-    logd_test.cpp
-
-# Build tests for the logger. Run with:
-#   adb shell /data/nativetest/logd-unit-tests/logd-unit-tests
-include $(CLEAR_VARS)
-LOCAL_MODULE := $(test_module_prefix)unit-tests
-LOCAL_MODULE_TAGS := $(test_tags)
-LOCAL_CFLAGS += $(test_c_flags)
-LOCAL_SHARED_LIBRARIES := libbase libcutils liblog
-LOCAL_SRC_FILES := $(test_src_files)
-include $(BUILD_NATIVE_TEST)
+%canon_reldir%_logd_unit_tests_CPPFLAGS = \
+    $(AM_CPPFLAGS) \
+    $(BIONIC_CFLAGS) \
+    -I$(srcdir)/base/include \
+    $(GTEST_CPPFLAGS)
+%canon_reldir%_logd_unit_tests_SOURCES = \
+    %reldir%/logd_test.cpp
+%canon_reldir%_logd_unit_tests_LDADD = \
+    base/libandroid-base.la \
+    libcutils/libandroid-cutils.la \
+    liblog/libandroid-log.la \
+    $(GTEST_LIBS)
+%canon_reldir%_logd_unit_tests_DEPENDENCIES = \
+    base/libandroid-base.la \
+    libcutils/libandroid-cutils.la \
+    liblog/libandroid-log.la \
+    $(GTEST_LIBS)
+endif
