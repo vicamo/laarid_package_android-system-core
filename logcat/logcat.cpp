@@ -110,16 +110,18 @@ static void rotateLogs()
 
     for (int i = g_maxRotatedLogs ; i > 0 ; i--) {
         char *file0, *file1;
+        int len;
 
-        asprintf(&file1, "%s.%.*d", g_outputFileName, maxRotationCountDigits, i);
-
-        if (i - 1 == 0) {
-            asprintf(&file0, "%s", g_outputFileName);
-        } else {
-            asprintf(&file0, "%s.%.*d", g_outputFileName, maxRotationCountDigits, i - 1);
+        len = asprintf(&file1, "%s.%.*d", g_outputFileName, maxRotationCountDigits, i);
+        if (len > 0) {
+            if (i - 1 == 0) {
+                len = asprintf(&file0, "%s", g_outputFileName);
+            } else {
+                len = asprintf(&file0, "%s.%.*d", g_outputFileName, maxRotationCountDigits, i - 1);
+            }
         }
 
-        if (!file0 || !file1) {
+        if (len < 0 || !file0 || !file1) {
             perror("while rotating log files");
             break;
         }

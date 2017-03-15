@@ -265,7 +265,7 @@ static void *reinit_thread_start(void * /*obj*/) {
             static const char reinit_message[] = { KMSG_PRIORITY(LOG_INFO),
                 'l', 'o', 'g', 'd', '.', 'd', 'a', 'e', 'm', 'o', 'n', ':',
                 ' ', 'r', 'e', 'i', 'n', 'i', 't', '\n' };
-            write(fdDmesg, reinit_message, sizeof(reinit_message));
+            TEMP_FAILURE_RETRY(write(fdDmesg, reinit_message, sizeof(reinit_message)));
         }
 
         // Anything that reads persist.<property>

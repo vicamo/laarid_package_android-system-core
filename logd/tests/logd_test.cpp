@@ -496,7 +496,7 @@ TEST(logd, benchmark) {
     if (write(sock, getPruneList, sizeof(getPruneList)) > 0) {
         char buffer[80];
         memset(buffer, 0, sizeof(buffer));
-        read(sock, buffer, sizeof(buffer));
+        TEMP_FAILURE_RETRY(read(sock, buffer, sizeof(buffer)));
         char *cp = strchr(buffer, '\n');
         if (!cp || (cp[1] != '~') || (cp[2] != '!')) {
             close(sock);
@@ -520,7 +520,7 @@ TEST(logd, benchmark) {
     if (write(sock, getSize, sizeof(getSize)) > 0) {
         char buffer[80];
         memset(buffer, 0, sizeof(buffer));
-        read(sock, buffer, sizeof(buffer));
+        TEMP_FAILURE_RETRY(read(sock, buffer, sizeof(buffer)));
         totalSize = atol(buffer);
         if (totalSize < expected_absolute_minimum_log_size) {
             fprintf(stderr,

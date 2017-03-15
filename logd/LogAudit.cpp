@@ -50,7 +50,7 @@ LogAudit::LogAudit(LogBuffer *buf, LogReader *reader, int fdDmesg) :
     static const char auditd_message[] = { KMSG_PRIORITY(LOG_INFO),
         'l', 'o', 'g', 'd', '.', 'a', 'u', 'd', 'i', 't', 'd', ':',
         ' ', 's', 't', 'a', 'r', 't', '\n' };
-    write(fdDmesg, auditd_message, sizeof(auditd_message));
+    TEMP_FAILURE_RETRY(write(fdDmesg, auditd_message, sizeof(auditd_message)));
 }
 
 bool LogAudit::onDataAvailable(SocketClient *cli) {
@@ -111,7 +111,7 @@ int LogAudit::logPrint(const char *fmt, ...) {
         iov[2].iov_base = const_cast<char *>("\n");
         iov[2].iov_len = 1;
 
-        writev(fdDmesg, iov, sizeof(iov) / sizeof(iov[0]));
+        TEMP_FAILURE_RETRY(writev(fdDmesg, iov, sizeof(iov) / sizeof(iov[0])));
     }
 
     pid_t pid = getpid();
