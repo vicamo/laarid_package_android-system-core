@@ -21,7 +21,7 @@
 extern "C" {
 #endif
 
-#define EVENT_TAG_MAP_FILE  "/system/etc/event-log-tags"
+#define EVENT_TAG_MAP_FILE  "@SYSCONFDIR@/logd/event-log-tags"
 
 struct EventTagMap;
 typedef struct EventTagMap EventTagMap;

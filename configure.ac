@@ -398,6 +398,7 @@ AM_CONDITIONAL([HAVE_DEV_ION], [test "x${c_cv_file_dev_ion}" = xyes])
 
 AC_SUBST([LOCALSTATEDIR], ${localstatedir})
 AC_SUBST([RUNSTATEDIR], ${runstatedir})
+AC_SUBST([SYSCONFDIR], ${sysconfdir})
 
 
 AC_CONFIG_FILES([
@@ -406,6 +407,7 @@ AC_CONFIG_FILES([
 AS_IF([test "x${with_stage}" = x1], [AC_CONFIG_FILES([
   base/android-base-$LAARID_API_VERSION.pc
   include/cutils/sockets.h
+  include/log/event_tag_map.h
   libcutils/android-cutils-$LAARID_API_VERSION.pc
   libdiskconfig/android-diskconfig-$LAARID_API_VERSION.pc
   libion/android-ion-$LAARID_API_VERSION.pc

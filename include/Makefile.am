@@ -13,17 +13,22 @@ if WITH_STAGE_1
 # --------------------
 %canon_reldir%_libandroid_log_incdir = $(androidincdir)/log
 %canon_reldir%_libandroid_log_inc_HEADERS = \
-	%reldir%/log/event_tag_map.h \
 	%reldir%/log/log.h \
 	%reldir%/log/log_read.h \
 	%reldir%/log/logd.h \
 	%reldir%/log/logger.h \
 	%reldir%/log/logprint.h
 
+nodist_%canon_reldir%_libandroid_log_inc_HEADERS = \
+	%reldir%/log/event_tag_map.h
+
 %canon_reldir%_libandroid_android_incdir = $(androidincdir)/android
 %canon_reldir%_libandroid_android_inc_HEADERS = \
 	%reldir%/android/log.h \
 	%reldir%/android/uidmap.h
+
+EXTRA_DIST += \
+	%reldir%/log/event_tag_map.h.in
 
 # HEADERS: android/mincrypt
 # -------------------------
