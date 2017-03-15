@@ -38,6 +38,40 @@
 #define LOG_BUFFER_MIN_SIZE (64 * 1024UL)
 #define LOG_BUFFER_MAX_SIZE (256 * 1024 * 1024UL)
 
+namespace android {
+
+bool isMonotonic(const log_time &mono) {
+    static const uint32_t EPOCH_PLUS_2_YEARS = 2 * 24 * 60 * 60 * 1461 / 4;
+    static const uint32_t EPOCH_PLUS_MINUTE = 60;
+
+    if (mono.tv_sec >= EPOCH_PLUS_2_YEARS) {
+        return false;
+    }
+
+    log_time now(CLOCK_REALTIME);
+
+    /* Timezone and ntp time setup? */
+    if (now.tv_sec >= EPOCH_PLUS_2_YEARS) {
+        return true;
+    }
+
+    /* no way to differentiate realtime from monotonic time */
+    if (now.tv_sec < EPOCH_PLUS_MINUTE) {
+        return false;
+    }
+
+    log_time cpu(CLOCK_MONOTONIC);
+    /* too close to call to differentiate monotonic times from realtime */
+    if ((cpu.tv_sec + EPOCH_PLUS_MINUTE) >= now.tv_sec) {
+        return false;
+    }
+
+    /* dividing line half way between monotonic and realtime */
+    return mono.tv_sec < ((cpu.tv_sec + now.tv_sec) / 2);
+}
+
+} // namespace android
+
 static bool valid_size(unsigned long value) {
     if ((value < LOG_BUFFER_MIN_SIZE) || (LOG_BUFFER_MAX_SIZE < value)) {
         return false;

@@ -715,7 +715,6 @@ int main(int argc, char **argv)
             break;
 
             case 'm': {
-                char *end = NULL;
                 if (!getSizeTArg(optarg, &g_maxCount)) {
                     logcat_panic(false, "-%c \"%s\" isn't an "
                                  "integer greater than zero\n", ret, optarg);
