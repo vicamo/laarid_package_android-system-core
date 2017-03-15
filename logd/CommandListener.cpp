@@ -24,6 +24,7 @@
 #include <sys/prctl.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <signal.h>
 
 #include <string>
 

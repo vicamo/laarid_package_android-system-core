@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/capability.h>
+#include <linux/capability.h>
 #include <sys/klog.h>
 #include <sys/prctl.h>
 #include <sys/resource.h>

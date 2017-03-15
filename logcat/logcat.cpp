@@ -39,6 +39,8 @@
 
 #include <pcrecpp.h>
 
+#include <bionic/bionic.h> // getprogname
+
 #define DEFAULT_MAX_ROTATED_LOGS 4
 
 static AndroidLogFormat * g_logformat;
@@ -83,6 +85,14 @@ static pcrecpp::RE* g_regex;
 static size_t g_maxCount;
 static size_t g_printCount;
 static bool g_printItAnyways;
+
+#ifndef __noreturn
+#define __noreturn __attribute__ ((__noreturn__))
+#endif
+
+#ifndef __printflike
+#define __printflike(x, y) __attribute__ ((__format__ (__printf__, x, y)))
+#endif
 
 // if showHelp is set, newline required in fmt statement to transition to usage
 __noreturn static void logcat_panic(bool showHelp, const char *fmt, ...) __printflike(2,3);

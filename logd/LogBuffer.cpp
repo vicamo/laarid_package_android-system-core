@@ -370,9 +370,9 @@ class LogBufferElementKey {
             uint16_t pid;
             uint16_t tid;
             uint16_t padding;
-        } __packed;
+        } __attribute__ ((__packed__));
         uint64_t value;
-    } __packed;
+    } __attribute__ ((__packed__));
 
 public:
     LogBufferElementKey(uid_t uid, pid_t pid, pid_t tid):
