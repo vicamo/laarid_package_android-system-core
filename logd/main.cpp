@@ -39,6 +39,7 @@
 #include <cutils/properties.h>
 #include <cutils/sched_policy.h>
 #include <cutils/sockets.h>
+#include <cutils/klog.h>
 #include <log/event_tag_map.h>
 #include <packagelistparser/packagelistparser.h>
 #include <private/android_filesystem_config.h>
