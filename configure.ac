@@ -396,6 +396,7 @@ AS_IF([test "x${cross_compiling}" != xyes],
 AM_CONDITIONAL([HAVE_DEV_ION], [test "x${c_cv_file_dev_ion}" = xyes])
 
 
+AC_SUBST([LOCALSTATEDIR], ${localstatedir})
 AC_SUBST([RUNSTATEDIR], ${runstatedir})
 
 
@@ -412,6 +413,7 @@ AS_IF([test "x${with_stage}" = x1], [AC_CONFIG_FILES([
   libmincrypt/android-mincrypt-$LAARID_API_VERSION.pc
   libnetutils/android-netutils-$LAARID_API_VERSION.pc
   libpackagelistparser/android-packagelistparser-$LAARID_API_VERSION.pc
+  libpackagelistparser/include/packagelistparser/packagelistparser.h
   libsparse/android-sparse-$LAARID_API_VERSION.pc
   libsuspend/android-suspend-$LAARID_API_VERSION.pc
   libsync/android-sync-$LAARID_API_VERSION.pc

@@ -35,7 +35,7 @@
 __BEGIN_DECLS
 
 /** The file containing the list of installed packages on the system */
-#define PACKAGES_LIST_FILE  "/data/system/packages.list"
+#define PACKAGES_LIST_FILE  "@LOCALSTATEDIR@/lib/android/system/packages.list"
 
 typedef struct pkg_info pkg_info;
 typedef struct gid_list gid_list;
