@@ -70,17 +70,11 @@ if WITH_STAGE_1
 	%reldir%/cutils/trace.h \
 	%reldir%/cutils/uevent.h
 
-%reldir%/cutils/sockets.h: $(top_srcdir)/%reldir%/cutils/sockets.h.in
-	$(AM_V_GEN)$(MKDIR_P) $(@D); \
-	cat $< | $(SED) -e 's|!runstatedir!|$(runstatedir)|' > $@
-
 nodist_%canon_reldir%_libandroid_cutils_inc_HEADERS = \
 	%reldir%/cutils/sockets.h
 
 EXTRA_DIST += \
 	%reldir%/cutils/sockets.h.in
-BUILT_SOURCES += \
-	%reldir%/cutils/sockets.h
 
 # HEADERS: android/diskconfig
 # ---------------------------

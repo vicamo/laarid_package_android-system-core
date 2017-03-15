@@ -395,11 +395,16 @@ AS_IF([test "x${cross_compiling}" != xyes],
   [AC_CHECK_FILE([/dev/ion])])
 AM_CONDITIONAL([HAVE_DEV_ION], [test "x${c_cv_file_dev_ion}" = xyes])
 
+
+AC_SUBST([RUNSTATEDIR], ${runstatedir})
+
+
 AC_CONFIG_FILES([
   Makefile
 ])
 AS_IF([test "x${with_stage}" = x1], [AC_CONFIG_FILES([
   base/android-base-$LAARID_API_VERSION.pc
+  include/cutils/sockets.h
   libcutils/android-cutils-$LAARID_API_VERSION.pc
   libdiskconfig/android-diskconfig-$LAARID_API_VERSION.pc
   libion/android-ion-$LAARID_API_VERSION.pc
