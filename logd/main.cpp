@@ -239,17 +239,23 @@ static bool package_list_parser_cb(pkg_info *info, void * /* userdata */) {
 }
 
 static void *reinit_thread_start(void * /*obj*/) {
+    int setuid_done = 0;
+
     prctl(PR_SET_NAME, "logd.daemon");
     set_sched_policy(0, SP_BACKGROUND);
     setpriority(PRIO_PROCESS, 0, ANDROID_PRIORITY_BACKGROUND);
 
-    // If we are AID_ROOT, we should drop to AID_SYSTEM, if we are anything
-    // else, we have even lesser privileges and accept our fate. Not worth
-    // checking for error returns setting this thread's privileges.
-    (void)setgid(AID_SYSTEM);
-    (void)setuid(AID_SYSTEM);
-
     while (reinit_running && !sem_wait(&reinit) && reinit_running) {
+
+        if (!setuid_done) {
+            setuid_done = 1;
+
+            // If we are AID_ROOT, we should drop to AID_SYSTEM, if we are anything
+            // else, we have even lesser privileges and accept our fate. Not worth
+            // checking for error returns setting this thread's privileges.
+            (void)setgid(AID_SYSTEM);
+            (void)setuid(AID_SYSTEM);
+        }
 
         // uidToName Privileged Worker
         if (uid) {
