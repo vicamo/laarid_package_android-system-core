@@ -85,7 +85,7 @@ static bool valid_size(unsigned long value) {
 
     long pagesize = sysconf(_SC_PAGESIZE);
     if (pagesize <= 1) {
-        pagesize = PAGE_SIZE;
+        return true;
     }
 
     // maximum memory impact a somewhat arbitrary ~3%
