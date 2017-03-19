@@ -39,6 +39,8 @@
 
 #include <pcrecpp.h>
 
+#include <bionic/bionic.h> // getprogname
+
 #define DEFAULT_MAX_ROTATED_LOGS 4
 
 static AndroidLogFormat * g_logformat;
@@ -84,6 +86,14 @@ static size_t g_maxCount;
 static size_t g_printCount;
 static bool g_printItAnyways;
 
+#ifndef __noreturn
+#define __noreturn __attribute__ ((__noreturn__))
+#endif
+
+#ifndef __printflike
+#define __printflike(x, y) __attribute__ ((__format__ (__printf__, x, y)))
+#endif
+
 // if showHelp is set, newline required in fmt statement to transition to usage
 __noreturn static void logcat_panic(bool showHelp, const char *fmt, ...) __printflike(2,3);
 
@@ -110,16 +120,18 @@ static void rotateLogs()
 
     for (int i = g_maxRotatedLogs ; i > 0 ; i--) {
         char *file0, *file1;
+        int len;
 
-        asprintf(&file1, "%s.%.*d", g_outputFileName, maxRotationCountDigits, i);
-
-        if (i - 1 == 0) {
-            asprintf(&file0, "%s", g_outputFileName);
-        } else {
-            asprintf(&file0, "%s.%.*d", g_outputFileName, maxRotationCountDigits, i - 1);
+        len = asprintf(&file1, "%s.%.*d", g_outputFileName, maxRotationCountDigits, i);
+        if (len > 0) {
+            if (i - 1 == 0) {
+                len = asprintf(&file0, "%s", g_outputFileName);
+            } else {
+                len = asprintf(&file0, "%s.%.*d", g_outputFileName, maxRotationCountDigits, i - 1);
+            }
         }
 
-        if (!file0 || !file1) {
+        if (len < 0 || !file0 || !file1) {
             perror("while rotating log files");
             break;
         }
@@ -703,7 +715,6 @@ int main(int argc, char **argv)
             break;
 
             case 'm': {
-                char *end = NULL;
                 if (!getSizeTArg(optarg, &g_maxCount)) {
                     logcat_panic(false, "-%c \"%s\" isn't an "
                                  "integer greater than zero\n", ret, optarg);

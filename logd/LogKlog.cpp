@@ -226,7 +226,7 @@ LogKlog::LogKlog(LogBuffer *buf, LogReader *reader, int fdWrite, int fdRead, boo
     char buffer[sizeof(priority_message) + sizeof(klogd_message) + 20 - 4];
     snprintf(buffer, sizeof(buffer), klogd_message, priority_message,
         signature.nsec());
-    write(fdWrite, buffer, strlen(buffer));
+    TEMP_FAILURE_RETRY(write(fdWrite, buffer, strlen(buffer)));
 }
 
 bool LogKlog::onDataAvailable(SocketClient *cli) {

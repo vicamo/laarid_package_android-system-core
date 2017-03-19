@@ -21,6 +21,7 @@
 #define _ANDROID_UIDMAP_H_
 
 #include <limits.h>
+#include <stdint.h>
 #include <sys/types.h>
 
 #define ANDROID_UID_GETTER_NAME(name) \
@@ -49,6 +50,41 @@
 		return id; \
 	}
 
+
+/**
+ * On Android, it's uid mapping is segmented into zones and regions. An user
+ * zone is defined by AID_USER, which contains several regions with size
+ * AID_APP. It can be illustrated as:
+ *
+ *   |<- u0_r0 ->|<- u0_r1 ->| ... |<- u0_r9 ->| ...
+ *   |<----               u0              ---->|<---- u1 ---->| ...
+ *
+ * On Android, the first region is for hard coded uid/gid, the second region is
+ * for app user, the last one is for fully isolated sandboxed processes.
+ *
+ * So, on Debian there is no such segmentation of course. In order to emulate
+ * behavior here, we follow DP's UID and GID classes policy and assign the
+ * first region to 0-65535, which basically contains uid/gid allocated globally
+ * or locally for the system under normal cases. This, however, implies the
+ * size of a region, 65536, is different from that of Android systems, 10000.
+ *
+ * DP: https://www.debian.org/doc/debian-policy/ch-opersys.html#s9.2
+ */
+
+/* first app user */
+#define AID_APP              (UINT16_MAX + 1)
+/* offset for uid ranges for each user */
+#define AID_USER             (AID_APP * 10)
+
+/* start of gids for apps in each user to share */
+#define AID_SHARED_GID_START (AID_APP * 5)
+/* end of gids for apps in each user to share */
+#define AID_SHARED_GID_END   (AID_SHARED_GID_START + AID_APP - 1)
+/* start of gids for apps in each user to share */
+#define AID_ISOLATED_START   (AID_APP * 9)
+/* end of gids for apps in each user to share */
+#define AID_ISOLATED_END     (AID_ISOLATED_START + AID_APP - 1)
+
 __BEGIN_DECLS
 
 uid_t android_uid_get(const char* name);
@@ -61,6 +97,9 @@ ANDROID_UID_GETTER_DECL(log);
 #define AUID_LOG ANDROID_UID_GETTER_NAME(log)()
 ANDROID_GID_GETTER_DECL(log);
 #define AGID_LOG ANDROID_GID_GETTER_NAME(log)()
+
+ANDROID_GID_GETTER_DECL(readproc);
+#define AGID_READPROC ANDROID_GID_GETTER_NAME(readproc)()
 
 ANDROID_UID_GETTER_DECL(shell);
 #define AUID_SHELL ANDROID_UID_GETTER_NAME(shell)()

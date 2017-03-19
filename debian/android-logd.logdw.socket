@@ -1,0 +1,12 @@
+[Unit]
+Description=Android logd message socket
+
+[Socket]
+ListenDatagram=/run/logdw
+Service=logd.service
+SocketUser=logd
+SocketGroup=logd
+SocketMode=0222
+
+[Install]
+WantedBy=sockets.target

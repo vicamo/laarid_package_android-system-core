@@ -31,12 +31,47 @@
 #include "LogBuffer.h"
 #include "LogKlog.h"
 #include "LogReader.h"
+#include "LogUtils.h"
 
 // Default
 #define LOG_BUFFER_SIZE (256 * 1024) // Tuned with ro.logd.size per-platform
 #define log_buffer_size(id) mMaxSize[id]
 #define LOG_BUFFER_MIN_SIZE (64 * 1024UL)
 #define LOG_BUFFER_MAX_SIZE (256 * 1024 * 1024UL)
+
+namespace android {
+
+bool isMonotonic(const log_time &mono) {
+    static const uint32_t EPOCH_PLUS_2_YEARS = 2 * 24 * 60 * 60 * 1461 / 4;
+    static const uint32_t EPOCH_PLUS_MINUTE = 60;
+
+    if (mono.tv_sec >= EPOCH_PLUS_2_YEARS) {
+        return false;
+    }
+
+    log_time now(CLOCK_REALTIME);
+
+    /* Timezone and ntp time setup? */
+    if (now.tv_sec >= EPOCH_PLUS_2_YEARS) {
+        return true;
+    }
+
+    /* no way to differentiate realtime from monotonic time */
+    if (now.tv_sec < EPOCH_PLUS_MINUTE) {
+        return false;
+    }
+
+    log_time cpu(CLOCK_MONOTONIC);
+    /* too close to call to differentiate monotonic times from realtime */
+    if ((cpu.tv_sec + EPOCH_PLUS_MINUTE) >= now.tv_sec) {
+        return false;
+    }
+
+    /* dividing line half way between monotonic and realtime */
+    return mono.tv_sec < ((cpu.tv_sec + now.tv_sec) / 2);
+}
+
+} // namespace android
 
 static bool valid_size(unsigned long value) {
     if ((value < LOG_BUFFER_MIN_SIZE) || (LOG_BUFFER_MAX_SIZE < value)) {
@@ -50,7 +85,7 @@ static bool valid_size(unsigned long value) {
 
     long pagesize = sysconf(_SC_PAGESIZE);
     if (pagesize <= 1) {
-        pagesize = PAGE_SIZE;
+        return true;
     }
 
     // maximum memory impact a somewhat arbitrary ~3%
@@ -323,7 +358,7 @@ LogBufferElementCollection::iterator LogBuffer::erase(
         }
     }
 
-    if (element->getUid() == AID_SYSTEM) {
+    if (element->getUid() == AUID_SYSTEM) {
         // start of scope for pid found iterator
         LogBufferPidIteratorMap::iterator found =
             mLastWorstPidOfSystem[id].find(element->getPid());
@@ -370,9 +405,9 @@ class LogBufferElementKey {
             uint16_t pid;
             uint16_t tid;
             uint16_t padding;
-        } __packed;
+        } __attribute__ ((__packed__));
         uint64_t value;
-    } __packed;
+    } __attribute__ ((__packed__));
 
 public:
     LogBufferElementKey(uid_t uid, pid_t pid, pid_t tid):
@@ -508,7 +543,7 @@ bool LogBuffer::prune(log_id_t id, unsigned long pruneRows, uid_t caller_uid) {
 
     LogBufferElementCollection::iterator it;
 
-    if (caller_uid != AID_ROOT) {
+    if (caller_uid != AUID_ROOT) {
         // Only here if clearAll condition (pruneRows == ULONG_MAX)
         it = mLastSet[id] ? mLast[id] : mLogElements.begin();
         while (it != mLogElements.end()) {
@@ -553,7 +588,7 @@ bool LogBuffer::prune(log_id_t id, unsigned long pruneRows, uid_t caller_uid) {
         if (worstUidEnabledForLogid(id) && mPrune.worstUidEnabled()) {
             {   // begin scope for UID sorted list
                 std::unique_ptr<const UidEntry *[]> sorted = stats.sort(
-                    AID_ROOT, (pid_t)0, 2, id);
+                    AUID_ROOT, (pid_t)0, 2, id);
 
                 if (sorted.get() && sorted[0] && sorted[1]) {
                     worst_sizes = sorted[0]->getSizes();
@@ -572,7 +607,7 @@ bool LogBuffer::prune(log_id_t id, unsigned long pruneRows, uid_t caller_uid) {
                 }
             }
 
-            if ((worst == AID_SYSTEM) && mPrune.worstPidOfSystemEnabled()) {
+            if ((worst == AUID_SYSTEM) && mPrune.worstPidOfSystemEnabled()) {
                 // begin scope of PID sorted list
                 std::unique_ptr<const PidEntry *[]> sorted = stats.sort(
                     worst, (pid_t)0, 2, id, worst);

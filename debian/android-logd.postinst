@@ -1,5 +1,5 @@
 #! /bin/sh
-# postinst script for libandroid-uidmap0
+# postinst script for android-logd
 
 set -e
 
@@ -16,19 +16,11 @@ set -e
 
 case "$1" in
   configure)
-    for username in log shell system; do
-      if ! getent passwd $username >/dev/null; then
-        adduser --disabled-password  --quiet --system \
-          --home / --no-create-home \
-          --gecos "Android $username account" --group $username;
-      fi;
-    done
-
-    for groupname in readproc; do
-      if ! getent group $groupname >/dev/null; then
-        addgroup --quiet --system $groupname;
-      fi;
-    done
+    if ! getent passwd logd >/dev/null; then
+      adduser --disabled-password  --quiet --system \
+        --home /var/run/pulse --no-create-home\
+        --gecos "Android log daemon" --group logd
+    fi
   ;;
   abort-upgrade|abort-remove|abort-deconfigure)
   ;;

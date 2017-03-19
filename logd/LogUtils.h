@@ -19,6 +19,7 @@
 
 #include <sys/types.h>
 
+#include <android/uidmap.h>
 #include <log/log.h>
 #include <sysutils/SocketClient.h>
 
@@ -73,5 +74,14 @@ template <int (*cmp)(const char *l, const char *r)>
 static inline int fast(const char *l, const char *r) {
     return (*l != *r) || cmp(l + 1, r + 1);
 }
+
+__BEGIN_DECLS
+
+ANDROID_UID_GETTER_DECL(logd);
+#define AUID_LOGD ANDROID_UID_GETTER_NAME(logd)()
+ANDROID_GID_GETTER_DECL(logd);
+#define AGID_LOGD ANDROID_GID_GETTER_NAME(logd)()
+
+__END_DECLS
 
 #endif // _LOGD_LOG_UTILS_H__

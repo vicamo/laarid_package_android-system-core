@@ -24,12 +24,13 @@
 #include <sys/prctl.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <signal.h>
 
 #include <string>
 
 #include <android-base/stringprintf.h>
 #include <cutils/sockets.h>
-#include <private/android_filesystem_config.h>
+#include <android/uidmap.h>
 #include <sysutils/SocketClient.h>
 
 #include "CommandListener.h"
@@ -83,7 +84,7 @@ int CommandListener::ClearCmd::runCommand(SocketClient *cli,
     setname();
     uid_t uid = cli->getUid();
     if (clientHasLogCredentials(cli)) {
-        uid = AID_ROOT;
+        uid = AUID_ROOT;
     }
 
     if (argc < 2) {
@@ -206,7 +207,7 @@ int CommandListener::GetStatisticsCmd::runCommand(SocketClient *cli,
     setname();
     uid_t uid = cli->getUid();
     if (clientHasLogCredentials(cli)) {
-        uid = AID_ROOT;
+        uid = AUID_ROOT;
     }
 
     unsigned int logMask = -1;

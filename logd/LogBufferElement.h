@@ -17,7 +17,7 @@
 #ifndef _LOGD_LOG_BUFFER_ELEMENT_H__
 #define _LOGD_LOG_BUFFER_ELEMENT_H__
 
-#include <stdatomic.h>
+#include <atomic>
 #include <stdlib.h>
 #include <sys/types.h>
 
@@ -48,7 +48,7 @@ class LogBufferElement {
     };
     const uint64_t mSequence;
     log_time mRealTime;
-    static atomic_int_fast64_t sequence;
+    static std::atomic_int_fast64_t sequence;
 
     // assumption: mMsg == NULL
     size_t populateDroppedMessage(char *&buffer,
@@ -74,7 +74,7 @@ public:
     }
     unsigned short getMsgLen() const { return mMsg ? mMsgLen : 0; }
     uint64_t getSequence(void) const { return mSequence; }
-    static uint64_t getCurrentSequence(void) { return sequence.load(memory_order_relaxed); }
+    static uint64_t getCurrentSequence(void) { return sequence.load(std::memory_order_relaxed); }
     log_time getRealTime(void) const { return mRealTime; }
 
     uint32_t getTag(void) const;

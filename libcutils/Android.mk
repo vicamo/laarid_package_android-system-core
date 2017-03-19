@@ -19,6 +19,7 @@ lib_LTLIBRARIES += \
 
 %canon_reldir%_libandroid_cutils_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
+	$(SYSTEMD_CFLAGS) \
 	$(BIONIC_CFLAGS)
 if ENABLE_CPUSETS
 %canon_reldir%_libandroid_cutils_la_CPPFLAGS += \
@@ -38,6 +39,7 @@ endif
 	$(libtool_opts)
 %canon_reldir%_libandroid_cutils_la_LIBADD = \
 	$(PTHREAD_LIBS) -lpthread\
+	$(SYSTEMD_LIBS) \
 	$(BIONIC_LIBS) \
 	libuidmap/libandroid-uidmap.la \
 	liblog/libandroid-log.la

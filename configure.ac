@@ -171,9 +171,27 @@ AC_SUBST([BIONIC_CFLAGS])
 AC_SUBST([BIONIC_LIBS])
 
 AS_IF([test "x${with_stage}" = x1], [
+  dnl AC_SEARCH_LIBS pushes found libs into LIBS, which adds unnecessary
+  dnl dependency to each built target, and that's not expected.
+  LIBS_saved=$LIBS
+  AC_SEARCH_LIBS([__atomic_load_8], [atomic],
+    [ATOMIC_LIBS=${LIBS#${LIBS_saved}}
+    AC_SUBST([ATOMIC_LIBS])
+    LIBS=${LIBS_saved}])
+
   PKG_CHECK_MODULES([NL], [libnl-3.0])
   AC_SUBST([NL_CFLAGS])
   AC_SUBST([NL_LIBS])
+
+  PKG_CHECK_MODULES([PCRECPP], [libpcrecpp],
+    [AC_SUBST([PCRECPP_CFLAGS])
+    AC_SUBST([PCRECPP_LIBS])])
+
+  PKG_CHECK_MODULES([SYSTEMD], [libsystemd],
+    [AC_SUBST([SYSTEMD_CFLAGS])
+    AC_SUBST([SYSTEMD_LIBS])
+    AC_DEFINE([HAVE_SYSTEMD], [1],
+      [Define to 1 if you have systemd.])])
   ],
   [test "x${with_stage}" = x2], [
   LOG_API_VERSION=0.0

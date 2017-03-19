@@ -19,8 +19,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <private/android_filesystem_config.h>
-
 #include "LogCommand.h"
 #include "LogUtils.h"
 
@@ -50,7 +48,7 @@ static bool groupIsLog(char *buf) {
         if (errno != 0) {
             return false;
         }
-        if (Gid == AID_LOG) {
+        if (Gid == AGID_LOG) {
             return true;
         }
     }
@@ -58,11 +56,11 @@ static bool groupIsLog(char *buf) {
 }
 
 bool clientHasLogCredentials(uid_t uid, gid_t gid, pid_t pid) {
-    if ((uid == AID_ROOT) || (uid == AID_SYSTEM) || (uid == AID_LOG)) {
+    if ((uid == AUID_ROOT) || (uid == AUID_SYSTEM) || (uid == AUID_LOG)) {
         return true;
     }
 
-    if ((gid == AID_ROOT) || (gid == AID_SYSTEM) || (gid == AID_LOG)) {
+    if ((gid == AGID_ROOT) || (gid == AGID_SYSTEM) || (gid == AGID_LOG)) {
         return true;
     }
 

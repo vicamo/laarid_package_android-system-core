@@ -39,6 +39,8 @@ gid_t android_gid_get(const char* name)
 ANDROID_UID_GETTER_IMPL(log)
 ANDROID_GID_GETTER_IMPL(log)
 
+ANDROID_GID_GETTER_IMPL(readproc)
+
 ANDROID_UID_GETTER_IMPL(shell)
 ANDROID_GID_GETTER_IMPL(shell)
 

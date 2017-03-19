@@ -1,0 +1,14 @@
+[Unit]
+Description=Android logd service
+Requires=logd.socket logdr.socket logdw.socket
+After=property-service.service
+
+[Service]
+ExecStart=/usr/sbin/logd
+ExecReload=/usr/sbin/logd --reinit
+User=root
+Group=root
+SupplementaryGroups=root system readproc
+
+[Install]
+WantedBy=multi-user.target

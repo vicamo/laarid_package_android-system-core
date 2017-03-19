@@ -22,10 +22,9 @@
 #include <list>
 #include <string>
 
+#include <android/uidmap.h>
 #include <log/log.h>
 #include <sysutils/SocketClient.h>
-
-#include <private/android_filesystem_config.h>
 
 #include "LogBufferElement.h"
 #include "LogTimes.h"
@@ -41,35 +40,7 @@
 //
 namespace android {
 
-static bool isMonotonic(const log_time &mono) {
-    static const uint32_t EPOCH_PLUS_2_YEARS = 2 * 24 * 60 * 60 * 1461 / 4;
-    static const uint32_t EPOCH_PLUS_MINUTE = 60;
-
-    if (mono.tv_sec >= EPOCH_PLUS_2_YEARS) {
-        return false;
-    }
-
-    log_time now(CLOCK_REALTIME);
-
-    /* Timezone and ntp time setup? */
-    if (now.tv_sec >= EPOCH_PLUS_2_YEARS) {
-        return true;
-    }
-
-    /* no way to differentiate realtime from monotonic time */
-    if (now.tv_sec < EPOCH_PLUS_MINUTE) {
-        return false;
-    }
-
-    log_time cpu(CLOCK_MONOTONIC);
-    /* too close to call to differentiate monotonic times from realtime */
-    if ((cpu.tv_sec + EPOCH_PLUS_MINUTE) >= now.tv_sec) {
-        return false;
-    }
-
-    /* dividing line half way between monotonic and realtime */
-    return mono.tv_sec < ((cpu.tv_sec + now.tv_sec) / 2);
-}
+bool isMonotonic(const log_time &mono);
 
 }
 
@@ -115,7 +86,7 @@ public:
                      int (*filter)(const LogBufferElement *element, void *arg) = NULL,
                      void *arg = NULL);
 
-    bool clear(log_id_t id, uid_t uid = AID_ROOT);
+    bool clear(log_id_t id, uid_t uid = AUID_ROOT);
     unsigned long getSize(log_id_t id);
     int setSize(log_id_t id, unsigned long size);
     unsigned long getSizeUsed(log_id_t id);
@@ -142,7 +113,7 @@ private:
     static constexpr size_t maxPrune = 256;
 
     void maybePrune(log_id_t id);
-    bool prune(log_id_t id, unsigned long pruneRows, uid_t uid = AID_ROOT);
+    bool prune(log_id_t id, unsigned long pruneRows, uid_t uid = AUID_ROOT);
     LogBufferElementCollection::iterator erase(
         LogBufferElementCollection::iterator it, bool coalesce = false);
 };

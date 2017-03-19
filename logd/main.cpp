@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/capability.h>
+#include <linux/capability.h>
 #include <sys/klog.h>
 #include <sys/prctl.h>
 #include <sys/resource.h>
@@ -32,6 +32,7 @@
 #include <sys/types.h>
 #include <syslog.h>
 #include <unistd.h>
+#include <grp.h>
 
 #include <cstdbool>
 #include <memory>
@@ -39,9 +40,9 @@
 #include <cutils/properties.h>
 #include <cutils/sched_policy.h>
 #include <cutils/sockets.h>
+#include <cutils/klog.h>
 #include <log/event_tag_map.h>
 #include <packagelistparser/packagelistparser.h>
-#include <private/android_filesystem_config.h>
 #include <utils/threads.h>
 
 #include "CommandListener.h"
@@ -56,6 +57,13 @@
     '0' + LOG_MAKEPRI(LOG_DAEMON, LOG_PRI(PRI)) / 10, \
     '0' + LOG_MAKEPRI(LOG_DAEMON, LOG_PRI(PRI)) % 10, \
     '>'
+
+__BEGIN_DECLS
+int capset(cap_user_header_t hdrp, const cap_user_data_t datap);
+__END_DECLS
+
+ANDROID_UID_GETTER_IMPL(logd)
+ANDROID_GID_GETTER_IMPL(logd)
 
 //
 //  The service is designed to be run by init, it does not respond well
@@ -106,17 +114,17 @@ static int drop_privs() {
         return -1;
     }
 
-    gid_t groups[] = { AID_READPROC };
+    gid_t groups[] = { AGID_READPROC };
 
     if (setgroups(sizeof(groups) / sizeof(groups[0]), groups) == -1) {
         return -1;
     }
 
-    if (setgid(AID_LOGD) != 0) {
+    if (setgid(AGID_LOGD) != 0) {
         return -1;
     }
 
-    if (setuid(AID_LOGD) != 0) {
+    if (setuid(AUID_LOGD) != 0) {
         return -1;
     }
 
@@ -238,17 +246,25 @@ static bool package_list_parser_cb(pkg_info *info, void * /* userdata */) {
 }
 
 static void *reinit_thread_start(void * /*obj*/) {
+    int setuid_done = 0;
+
     prctl(PR_SET_NAME, "logd.daemon");
     set_sched_policy(0, SP_BACKGROUND);
     setpriority(PRIO_PROCESS, 0, ANDROID_PRIORITY_BACKGROUND);
 
-    // If we are AID_ROOT, we should drop to AID_SYSTEM, if we are anything
-    // else, we have even lesser privileges and accept our fate. Not worth
-    // checking for error returns setting this thread's privileges.
-    (void)setgid(AID_SYSTEM);
-    (void)setuid(AID_SYSTEM);
-
     while (reinit_running && !sem_wait(&reinit) && reinit_running) {
+
+        if (!setuid_done) {
+            setuid_done = 1;
+
+            // If we are AID_ROOT, we should drop to AID_SYSTEM, if we are anything
+            // else, we have even lesser privileges and accept our fate. Not worth
+            // checking for error returns setting this thread's privileges.
+            if (setgid(AGID_SYSTEM) < 0)
+                perror(strerror(errno));
+            if (setuid(AUID_SYSTEM) < 0)
+                perror(strerror(errno));
+        }
 
         // uidToName Privileged Worker
         if (uid) {
@@ -265,7 +281,7 @@ static void *reinit_thread_start(void * /*obj*/) {
             static const char reinit_message[] = { KMSG_PRIORITY(LOG_INFO),
                 'l', 'o', 'g', 'd', '.', 'd', 'a', 'e', 'm', 'o', 'n', ':',
                 ' ', 'r', 'e', 'i', 'n', 'i', 't', '\n' };
-            write(fdDmesg, reinit_message, sizeof(reinit_message));
+            TEMP_FAILURE_RETRY(write(fdDmesg, reinit_message, sizeof(reinit_message)));
         }
 
         // Anything that reads persist.<property>

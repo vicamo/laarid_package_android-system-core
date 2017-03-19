@@ -34,6 +34,19 @@ void klog_writev(int level, const struct iovec* iov, int iov_count);
 
 __END_DECLS
 
+/* These correspond to the kernel's SYSLOG_ACTION_whatever constants. */
+#define KLOG_CLOSE         0
+#define KLOG_OPEN          1
+#define KLOG_READ          2
+#define KLOG_READ_ALL      3
+#define KLOG_READ_CLEAR    4
+#define KLOG_CLEAR         5
+#define KLOG_CONSOLE_OFF   6
+#define KLOG_CONSOLE_ON    7
+#define KLOG_CONSOLE_LEVEL 8
+#define KLOG_SIZE_UNREAD   9
+#define KLOG_SIZE_BUFFER   10
+
 #define KLOG_ERROR_LEVEL   3
 #define KLOG_WARNING_LEVEL 4
 #define KLOG_NOTICE_LEVEL  5
