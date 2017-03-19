@@ -174,6 +174,12 @@ AS_IF([test "x${with_stage}" = x1], [
   PKG_CHECK_MODULES([NL], [libnl-3.0])
   AC_SUBST([NL_CFLAGS])
   AC_SUBST([NL_LIBS])
+
+  PKG_CHECK_MODULES([SYSTEMD], [libsystemd],
+    [AC_SUBST([SYSTEMD_CFLAGS])
+    AC_SUBST([SYSTEMD_LIBS])
+    AC_DEFINE([HAVE_SYSTEMD], [1],
+      [Define to 1 if you have systemd.])])
   ],
   [test "x${with_stage}" = x2], [
   LOG_API_VERSION=0.0

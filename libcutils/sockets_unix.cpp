@@ -24,6 +24,10 @@
 typedef int  socklen_t;
 #elif HAVE_SYS_SOCKET_H
 #include <sys/socket.h>
+#include <sys/un.h>
+#endif
+#ifdef HAVE_SYSTEMD
+#include <systemd/sd-daemon.h>
 #endif
 
 #include <bionic/bionic.h> /* for strlcpy */
@@ -86,6 +90,31 @@ ssize_t socket_send_buffers(cutils_socket_t sock,
 
 int android_get_control_socket(const char* name)
 {
+#if defined(HAVE_SYSTEMD)
+	if (sd_listen_fds(0)) {
+		int n = sd_listen_fds(0);
+		socklen_t addrlen;
+		struct sockaddr *addr =
+			(struct sockaddr*) malloc(sizeof(struct sockaddr_un) + 1);
+
+		while (addr && (n-- > 0)) {
+			addrlen = sizeof(struct sockaddr_un);
+			memset(addr, 0, addrlen+ 1);
+			if (-1 == getsockname(SD_LISTEN_FDS_START + n,
+						addr, &addrlen))
+				continue;
+
+			char *p = basename(((struct sockaddr_un*)addr)->sun_path);
+			if (0 == strcmp(name, p)) {
+				free(addr);
+				return SD_LISTEN_FDS_START + n;
+			}
+		}
+
+		free(addr);
+	}
+#endif
+
 	char key[64];
 	snprintf(key, sizeof(key), ANDROID_SOCKET_ENV_PREFIX "%s", name);
 

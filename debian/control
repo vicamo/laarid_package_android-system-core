@@ -18,6 +18,7 @@ Build-Depends:
  libltdl-dev,
  libnl-3-dev <!pkg.android-system-core.stage2>,
  libsafe-iop-dev <pkg.android-system-core.stage2>,
+ libsystemd-dev <!pkg.android-system-core.stage2>,
  zlib1g-dev,
 Standards-Version: 3.9.5
 Section: libs
