@@ -107,7 +107,7 @@ before_deploy:
         -e "s#@BINTRAY_POOLABBR@#$(cat debian/control | grep ^Source: | awk '{print $2}' | cut -c1)#g" \
         -e "s#@BINTRAY_SUITE@#$(${DOCKER_EXEC_NOTTY} cat /etc/apt/sources.list | grep -m 1 '^deb ' | awk '{print $3}')#g" \
         -e "s#@BINTRAY_COMPONENT@#${BINTRAY_COMPONENT}#g" \
-        -e "s#@BINTRAY_ARCH@#$(${DOCKER_EXEC_NOTTY} dpkg --print-architecture)#g" | \
+        -e "s#@BINTRAY_ARCH@#${JOB_ARCH}#g" | \
     tee debian/bintray.json
 
 deploy:
