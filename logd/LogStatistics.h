@@ -19,6 +19,7 @@
 
 #include <memory>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 
 #include <algorithm> // std::max

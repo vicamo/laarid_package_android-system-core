@@ -30,7 +30,6 @@ typedef int  socklen_t;
 #include <systemd/sd-daemon.h>
 #endif
 
-#include <bionic/bionic.h> /* for strlcpy */
 #include <cutils/sockets.h>
 
 #include <sys/uio.h>

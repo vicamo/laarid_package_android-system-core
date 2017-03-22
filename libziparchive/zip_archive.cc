@@ -30,8 +30,6 @@
 #include <memory>
 #include <vector>
 
-#include <bionic/bionic.h>
-
 #include "android-base/file.h"
 #include "android-base/macros.h"  // TEMP_FAILURE_RETRY may or may not be in unistd
 #include "android-base/memory.h"

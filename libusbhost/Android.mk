@@ -17,6 +17,9 @@
 lib_LTLIBRARIES += \
 	%reldir%/libandroid-usbhost.la
 
+%canon_reldir%_libandroid_usbhost_la_CPPFLAGS = \
+	$(AM_CPPFLAGS) \
+	-DUSE_LIBLOG
 %canon_reldir%_libandroid_usbhost_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(libtool_opts)

@@ -22,8 +22,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
-
-#include <bionic/bionic.h>
+#include <errno.h>
 
 #include <cutils/debugger.h>
 #include <cutils/sockets.h>

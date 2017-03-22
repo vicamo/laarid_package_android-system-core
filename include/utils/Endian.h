@@ -15,24 +15,21 @@
  */
 
 //
-// Handy utility functions and portability code.
+// Android endian-ness defines.
 //
-#ifndef _LIBS_UTILS_MISC_H
-#define _LIBS_UTILS_MISC_H
+#ifndef _LIBS_UTILS_ENDIAN_H
+#define _LIBS_UTILS_ENDIAN_H
 
-#include <utils/Endian.h>
+#if defined(__APPLE__) || defined(_WIN32)
 
-/* get #of elements in a static array */
-#ifndef NELEM
-# define NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))
+#define __BIG_ENDIAN 0x1000
+#define __LITTLE_ENDIAN 0x0001
+#define __BYTE_ORDER __LITTLE_ENDIAN
+
+#else
+
+#include <endian.h>
+
 #endif
 
-namespace android {
-
-typedef void (*sysprop_change_callback)(void);
-void add_sysprop_change_callback(sysprop_change_callback cb, int priority);
-void report_sysprop_change();
-
-}; // namespace android
-
-#endif // _LIBS_UTILS_MISC_H
+#endif /*_LIBS_UTILS_ENDIAN_H*/

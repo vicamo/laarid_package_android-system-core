@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2007-2014 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,38 @@
  * limitations under the License.
  */
 
-#ifndef ANDROID_CUTILS_MEMORY_H
-#define ANDROID_CUTILS_MEMORY_H
+#ifndef _LIBS_CUTILS_UIO_H
+#define _LIBS_CUTILS_UIO_H
 
-#include <stdint.h>
-#include <sys/types.h>
+#if !defined(_WIN32)
+
+#include <sys/uio.h>
+
+#else
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/* size is given in bytes and must be multiple of 2 */
-void android_memset16(uint16_t* dst, uint16_t value, size_t size);
+//
+// Implementation of sys/uio.h for Win32.
+//
 
-/* size is given in bytes and must be multiple of 4 */
-void android_memset32(uint32_t* dst, uint32_t value, size_t size);
+#include <stddef.h>
 
-#if defined(__GLIBC__) || defined(_WIN32)
-/* Declaration of strlcpy() for platforms that don't already have it. */
-size_t strlcpy(char *dst, const char *src, size_t size);
-#endif
+struct iovec {
+    void*  iov_base;
+    size_t iov_len;
+};
+
+extern int  readv( int  fd, struct iovec*  vecs, int  count );
+extern int  writev( int  fd, const struct iovec*  vecs, int  count );
 
 #ifdef __cplusplus
-} // extern "C"
+}
 #endif
 
-#endif // ANDROID_CUTILS_MEMORY_H
+#endif
+
+#endif /* _LIBS_UTILS_UIO_H */
+

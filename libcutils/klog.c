@@ -24,8 +24,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <bionic/bionic.h>
-
 #include <cutils/klog.h>
 
 static int klog_fd = -1;

@@ -25,6 +25,7 @@
 #include <sys/types.h>
 #include <time.h>
 
+#include <bionic/bionic.h>
 #include <log/log.h>
 #include <log/logger.h>
 

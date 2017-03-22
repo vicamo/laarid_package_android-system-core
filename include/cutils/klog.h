@@ -34,6 +34,7 @@ void klog_writev(int level, const struct iovec* iov, int iov_count);
 
 __END_DECLS
 
+#if !defined(__BIONIC__)
 /* These correspond to the kernel's SYSLOG_ACTION_whatever constants. */
 #define KLOG_CLOSE         0
 #define KLOG_OPEN          1
@@ -60,5 +61,6 @@ __END_DECLS
 #define KLOG_DEBUG(tag,x...)   klog_write(KLOG_DEBUG_LEVEL, "<7>" tag ": " x)
 
 #define KLOG_DEFAULT_LEVEL  3  /* messages <= this level are logged */
+#endif /* !__BIONIC__ */
 
 #endif

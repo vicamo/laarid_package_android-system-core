@@ -1144,9 +1144,20 @@ const char* CopySharedLibrary() {
   const char* lib_name = "lib";
 #endif
 
+#if defined(__BIONIC__) || defined(__LAARID__)
   const char* tmp_so_name = "/data/local/tmp/libbacktrace_test.so";
   std::string cp_cmd = android::base::StringPrintf("cp /system/%s/libbacktrace_test.so %s",
                                                    lib_name, tmp_so_name);
+#else
+  const char* tmp_so_name = "/tmp/libbacktrace_test.so";
+  if (getenv("ANDROID_HOST_OUT") == NULL) {
+    fprintf(stderr, "ANDROID_HOST_OUT not set, make sure you run lunch.");
+    return nullptr;
+  }
+  std::string cp_cmd = android::base::StringPrintf("cp %s/%s/libbacktrace_test.so %s",
+                                                   getenv("ANDROID_HOST_OUT"), lib_name,
+                                                   tmp_so_name);
+#endif
 
   // Copy the shared so to a tempory directory.
   system(cp_cmd.c_str());

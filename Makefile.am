@@ -40,6 +40,7 @@ AM_CPPFLAGS = \
 	-DLOCALSTATEDIR=\"$(localstatedir)\" \
 	-DRUNSTATEDIR=\"$(runstatedir)\" \
 	-DSYSCONFDIR=\"$(sysconfdir)\" \
+	-D__LAARID__ \
 	-DNDEBUG
 
 AM_CFLAGS = \

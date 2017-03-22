@@ -56,6 +56,7 @@ typedef std::function<void(LogId, LogSeverity, const char*, const char*,
 extern void StderrLogger(LogId, LogSeverity, const char*, const char*,
                          unsigned int, const char*);
 
+#if defined(__ANDROID__) || defined(__LAARID__)
 // We expose this even though it is the default because a user that wants to
 // override the default log buffer will have to construct this themselves.
 class LogdLogger {
@@ -68,6 +69,7 @@ class LogdLogger {
  private:
   LogId default_log_id_;
 };
+#endif
 
 // Configure logging based on ANDROID_LOG_TAGS environment variable.
 // We need to parse a string that looks like

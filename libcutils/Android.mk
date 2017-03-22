@@ -57,6 +57,7 @@ endif
 	%reldir%/load_file.c \
 	%reldir%/multiuser.c \
 	%reldir%/native_handle.c \
+	%reldir%/open_memstream.c \
 	%reldir%/partition_utils.c \
 	%reldir%/process_name.c \
 	%reldir%/properties.c \
@@ -75,6 +76,7 @@ endif
 	%reldir%/str_parms.c \
 	%reldir%/strdup16to8.c \
 	%reldir%/strdup8to16.c \
+	%reldir%/strlcpy.c \
 	%reldir%/threads.c \
 	%reldir%/uevent.c
 

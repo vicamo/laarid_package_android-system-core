@@ -23,8 +23,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <bionic/bionic.h> /* for gettid() */
 #include <cutils/sched_policy.h>
+#include <cutils/threads.h>
 #include <log/log.h>
 
 #define UNUSED __attribute__((__unused__))
@@ -37,6 +37,8 @@ static inline SchedPolicy _policy(SchedPolicy p)
 {
    return p == SP_DEFAULT ? SP_SYSTEM_DEFAULT : p;
 }
+
+#if defined(__ANDROID__) || defined(__LAARID__)
 
 #include <pthread.h>
 #include <sched.h>
@@ -160,6 +162,7 @@ static void __initialize(void) {
  */
 static int getCGroupSubsys(int tid, const char* subsys, char* buf, size_t bufLen)
 {
+#if defined(__ANDROID__) || defined(__LAARID__)
     char pathBuf[32];
     char lineBuf[256];
     FILE *fp;
@@ -212,6 +215,10 @@ static int getCGroupSubsys(int tid, const char* subsys, char* buf, size_t bufLen
     SLOGE("Bad cgroup data {%s}", lineBuf);
     fclose(fp);
     return -1;
+#else
+    errno = ENOSYS;
+    return -1;
+#endif
 }
 
 int get_sched_policy(int tid, SchedPolicy *policy)
@@ -405,6 +412,23 @@ int set_sched_policy(int tid, SchedPolicy policy)
 
     return 0;
 }
+
+#else
+
+/* Stubs for non-Android targets. */
+
+int set_sched_policy(int tid UNUSED, SchedPolicy policy UNUSED)
+{
+    return 0;
+}
+
+int get_sched_policy(int tid UNUSED, SchedPolicy *policy)
+{
+    *policy = SP_SYSTEM_DEFAULT;
+    return 0;
+}
+
+#endif
 
 const char *get_sched_policy_name(SchedPolicy policy)
 {

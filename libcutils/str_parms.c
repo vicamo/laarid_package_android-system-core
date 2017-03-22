@@ -24,9 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <bionic/bionic.h>
-
 #include <cutils/hashmap.h>
+#include <cutils/memory.h>
 #include <cutils/str_parms.h>
 #include <log/log.h>
 

@@ -7,7 +7,6 @@ sbin_PROGRAMS += \
     $(AM_CPPFLAGS) \
     $(BIONIC_CFLAGS) \
     -I$(top_srcdir)/base/include \
-    -DLAARID_APROPD \
     -DALLOW_LOCAL_PROP_OVERRIDE=1
 
 %canon_reldir%_apropd_CXXFLAGS = \

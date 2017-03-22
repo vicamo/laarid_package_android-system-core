@@ -34,8 +34,8 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <bionic/bionic.h>
 #include <log/logd.h>
+#include <log/uio.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -66,6 +66,10 @@ extern "C" {
 #endif
 
 // ---------------------------------------------------------------------
+
+#ifndef __predict_false
+#define __predict_false(exp) __builtin_expect((exp) != 0, 0)
+#endif
 
 /*
  *      -DLINT_RLOG in sources that you want to enforce that all logging

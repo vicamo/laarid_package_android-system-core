@@ -48,7 +48,9 @@ lib_LTLIBRARIES += \
 	%reldir%/UnwindMap.cpp \
 	%reldir%/UnwindMap.h \
 	%reldir%/UnwindPtrace.cpp \
-	%reldir%/UnwindPtrace.h
+	%reldir%/UnwindPtrace.h \
+	%reldir%/thread_utils.c \
+	%reldir%/thread_utils.h
 
 pkgconfig_DATA += \
 	%reldir%/android-backtrace-$(LAARID_API_VERSION).pc

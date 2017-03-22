@@ -43,7 +43,7 @@ static constexpr const char* kPublicNativeLibrariesVendorConfig = "/vendor/etc/p
 static constexpr const char* kWhitelistedDirectories = "/data:/mnt/expand";
 
 static bool is_debuggable() {
-  char debuggable[PROP_VALUE_MAX];
+  char debuggable[PROPERTY_VALUE_MAX];
   property_get("ro.debuggable", debuggable, "0");
   return std::string(debuggable) == "1";
 }

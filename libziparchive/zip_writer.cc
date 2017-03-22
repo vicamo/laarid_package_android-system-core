@@ -27,6 +27,7 @@
 #include <memory>
 #include <vector>
 #include <zlib.h>
+#include <string.h>
 #define DEF_MEM_LEVEL 8                // normally in zutil.h?
 
 #if !defined(powerof2)

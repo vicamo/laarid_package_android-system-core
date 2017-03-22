@@ -31,7 +31,7 @@
 #include <unistd.h>
 
 #include <linux/ashmem.h>
-#include <bionic/bionic.h>
+
 #include <cutils/ashmem.h>
 #include <log/log.h>
 

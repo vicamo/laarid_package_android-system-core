@@ -17,7 +17,8 @@ if WITH_STAGE_1
 	%reldir%/log/log_read.h \
 	%reldir%/log/logd.h \
 	%reldir%/log/logger.h \
-	%reldir%/log/logprint.h
+	%reldir%/log/logprint.h \
+	%reldir%/log/uio.h
 
 nodist_%canon_reldir%_libandroid_log_inc_HEADERS = \
 	%reldir%/log/event_tag_map.h
@@ -64,6 +65,7 @@ EXTRA_DIST += \
 	%reldir%/cutils/misc.h \
 	%reldir%/cutils/multiuser.h \
 	%reldir%/cutils/native_handle.h \
+	%reldir%/cutils/open_memstream.h \
 	%reldir%/cutils/partition_utils.h \
 	%reldir%/cutils/process_name.h \
 	%reldir%/cutils/properties.h \
@@ -154,6 +156,7 @@ if WITH_STAGE_2
 	%reldir%/utils/Compat.h \
 	%reldir%/utils/Condition.h \
 	%reldir%/utils/Debug.h \
+	%reldir%/utils/Endian.h \
 	%reldir%/utils/Errors.h \
 	%reldir%/utils/FileMap.h \
 	%reldir%/utils/Flattenable.h \

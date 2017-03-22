@@ -16,7 +16,33 @@
 
 #include "cutils/threads.h"
 
-#include <bionic/bionic.h> // For gettid.
+// For gettid.
+#if defined(__APPLE__)
+#include "AvailabilityMacros.h"  // For MAC_OS_X_VERSION_MAX_ALLOWED
+#include <stdint.h>
+#include <stdlib.h>
+#include <sys/syscall.h>
+#include <sys/time.h>
+#include <unistd.h>
+#elif defined(__linux__) && !defined(__ANDROID__)
+#include <syscall.h>
+#include <unistd.h>
+#elif defined(_WIN32)
+#include <windows.h>
+#endif
+
+// No definition needed for Android because we'll just pick up bionic's copy.
+#ifndef __ANDROID__
+pid_t gettid() {
+#if defined(__APPLE__)
+  return syscall(SYS_thread_selfid);
+#elif defined(__linux__)
+  return syscall(__NR_gettid);
+#elif defined(_WIN32)
+  return GetCurrentThreadId();
+#endif
+}
+#endif  // __ANDROID__
 
 #if !defined(_WIN32)
 

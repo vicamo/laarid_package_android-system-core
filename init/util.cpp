@@ -27,11 +27,11 @@
 #include <pwd.h>
 #include <unistd.h>
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
 #include <selinux/selinux.h>
 #include <selinux/label.h>
 #include <selinux/android.h>
-#endif /* !LAARID_APROPD */
+#endif /* !__LAARID__ */
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -106,7 +106,7 @@ int create_socket(const char *name, int type, mode_t perm, uid_t uid,
 {
     struct sockaddr_un addr;
     int fd, ret, savederrno;
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     char *filecon;
 
     if (socketcon) {
@@ -123,7 +123,7 @@ int create_socket(const char *name, int type, mode_t perm, uid_t uid,
         return -1;
     }
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     if (socketcon)
         setsockcreatecon(NULL);
 #endif
@@ -139,7 +139,7 @@ int create_socket(const char *name, int type, mode_t perm, uid_t uid,
         goto out_close;
     }
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     filecon = NULL;
     if (sehandle) {
         ret = selabel_lookup(sehandle, &filecon, addr.sun_path, S_IFSOCK);
@@ -151,7 +151,7 @@ int create_socket(const char *name, int type, mode_t perm, uid_t uid,
     ret = bind(fd, (struct sockaddr *) &addr, sizeof (addr));
     savederrno = errno;
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     setfscreatecon(NULL);
     freecon(filecon);
 #endif
@@ -453,7 +453,7 @@ int make_dir(const char *path, mode_t mode)
 {
     int rc;
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     char *secontext = NULL;
 
     if (sehandle) {
@@ -464,7 +464,7 @@ int make_dir(const char *path, mode_t mode)
 
     rc = mkdir(path, mode);
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     if (secontext) {
         int save_errno = errno;
         freecon(secontext);
@@ -476,7 +476,7 @@ int make_dir(const char *path, mode_t mode)
     return rc;
 }
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
 int restorecon(const char* pathname)
 {
     return selinux_android_restorecon(pathname, 0);
@@ -486,7 +486,7 @@ int restorecon_recursive(const char* pathname)
 {
     return selinux_android_restorecon(pathname, SELINUX_ANDROID_RESTORECON_RECURSE);
 }
-#endif /* !LAARID_APROPD */
+#endif /* !__LAARID__ */
 
 /*
  * Writes hex_len hex characters (1/2 byte) to hex from bytes.

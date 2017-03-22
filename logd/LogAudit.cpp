@@ -27,6 +27,8 @@
 
 #include <log/logger.h>
 #include <private/android_logger.h>
+#include <cutils/memory.h>
+#include <cutils/threads.h>
 
 #include "libaudit.h"
 #include "LogAudit.h"

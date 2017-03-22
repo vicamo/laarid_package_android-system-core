@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <assert.h>
 
+#include <bionic/bionic.h>
 #include <cutils/properties.h>
 #include <stdbool.h>
 #include <inttypes.h>

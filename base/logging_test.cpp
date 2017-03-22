@@ -31,7 +31,11 @@
 
 #include <gtest/gtest.h>
 
+#if defined(__ANDROID__) || defined(__LAARID__)
 #define HOST_TEST(suite, name) TEST(suite, DISABLED_ ## name)
+#else
+#define HOST_TEST(suite, name) TEST(suite, name)
+#endif
 
 class CapturedStderr {
  public:

@@ -73,6 +73,7 @@ extern void androidSetCreateThreadFunc(android_create_thread_fn func);
 // ------------------------------------------------------------------
 // Extra functions working with raw pids.
 
+#if defined(__ANDROID__) || defined(__LAARID__)
 // Change the priority AND scheduling group of a particular thread.  The priority
 // should be one of the ANDROID_PRIORITY constants.  Returns INVALID_OPERATION
 // if the priority set failed, else another value if just the group set failed;
@@ -82,6 +83,7 @@ extern int androidSetThreadPriority(pid_t tid, int prio);
 // Get the current priority of a particular thread. Returns one of the
 // ANDROID_PRIORITY constants or a negative result in case of error.
 extern int androidGetThreadPriority(pid_t tid);
+#endif
 
 #ifdef __cplusplus
 } // extern "C"

@@ -31,6 +31,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <bionic/bionic.h>
 #include <cutils/sockets.h>
 #include <log/logd.h>
 #include <log/logger.h>

@@ -40,7 +40,7 @@
 #include "cutils/threads.h"
 
 // Headers for LogMessage::LogLine.
-#if 0
+#ifdef __ANDROID__
 /* FIXME: https://github.com/laarid/package_android-system-core/issues/19 */
 #include <android/set_abort_message.h>
 #endif
@@ -96,8 +96,11 @@ namespace base {
 
 static auto& logging_lock = *new mutex();
 
+#if defined(__ANDROID__) || defined(__LAARID__)
 static auto& gLogger = *new LogFunction(LogdLogger());
-//static auto& gLogger = *new LogFunction(StderrLogger);
+#else
+static auto& gLogger = *new LogFunction(StderrLogger);
+#endif
 
 static bool gInitialized = false;
 static LogSeverity gMinimumLogSeverity = INFO;
@@ -126,6 +129,7 @@ void StderrLogger(LogId, LogSeverity severity, const char*, const char* file,
 }
 
 
+#if defined(__ANDROID__) || defined(__LAARID__)
 LogdLogger::LogdLogger(LogId default_log_id) : default_log_id_(default_log_id) {
 }
 
@@ -160,6 +164,7 @@ void LogdLogger::operator()(LogId id, LogSeverity severity, const char* tag,
     __android_log_buf_print(lg_id, priority, tag, "%s", message);
   }
 }
+#endif
 
 void InitLogging(char* argv[], LogFunction&& logger) {
   SetLogger(std::forward<LogFunction>(logger));
@@ -327,7 +332,7 @@ LogMessage::~LogMessage() {
 
   // Abort if necessary.
   if (data_->GetSeverity() == FATAL) {
-#if 0
+#ifdef __ANDROID__
     /* FIXME: https://github.com/laarid/package_android-system-core/issues/19 */
     android_set_abort_message(msg.c_str());
 #endif

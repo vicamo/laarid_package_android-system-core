@@ -24,18 +24,22 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <bionic/bionic.h>
-
 #include <cutils/process_name.h>
+#if defined(__ANDROID__)
 #include <cutils/properties.h>
+#endif
 
 #define PROCESS_NAME_DEVICE "/sys/qemu_trace/process_name"
 
 static const char* process_name = "unknown";
+#if defined(__ANDROID__)
 static int running_in_emulator = -1;
+#endif
 
 void set_process_name(const char* new_name) {
+#if defined(__ANDROID__)
     char  propBuf[PROPERTY_VALUE_MAX];
+#endif
 
     if (new_name == NULL) {
         return;
@@ -55,6 +59,7 @@ void set_process_name(const char* new_name) {
     }
 #endif
 
+#if defined(__ANDROID__)
     // If we know we are not running in the emulator, then return.
     if (running_in_emulator == 0) {
         return;
@@ -84,6 +89,7 @@ void set_process_name(const char* new_name) {
         return;
     TEMP_FAILURE_RETRY(write(fd, process_name, strlen(process_name) + 1));
     close(fd);
+#endif
 }
 
 const char* get_process_name(void) {

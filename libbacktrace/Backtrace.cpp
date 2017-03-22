@@ -22,14 +22,13 @@
 
 #include <string>
 
-#include <bionic/bionic.h>
-
 #include <android-base/stringprintf.h>
 
 #include <backtrace/Backtrace.h>
 #include <backtrace/BacktraceMap.h>
 
 #include "BacktraceLog.h"
+#include "thread_utils.h"
 #include "UnwindCurrent.h"
 #include "UnwindPtrace.h"
 

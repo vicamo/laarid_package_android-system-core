@@ -8,4 +8,4 @@ Description: Android System Core Libraries - utils
 Version: @VERSION@
 Requires.private: android-log-@LOG_API_VERSION@ >= @LOG_REQUIRED_VERSION@, android-cutils-@CUTILS_API_VERSION@ >= @CUTILS_REQUIRED_VERSION@, android-bionic-@BIONIC_API_VERSION@ >= @BIONIC_REQUIRED_VERSION@, android-backtrace-@LAARID_API_VERSION@
 Libs: -L${libdir} -landroid-utils
-Cflags: -I${includedir}/android/system-core-@LAARID_API_VERSION@
+Cflags: -I${includedir}/android/system-core-@LAARID_API_VERSION@ -D__LAARID__

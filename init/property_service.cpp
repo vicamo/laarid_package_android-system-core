@@ -44,14 +44,14 @@
 #include <netinet/in.h>
 #include <sys/mman.h>
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
 #include <selinux/selinux.h>
 #include <selinux/label.h>
 
 #include <fs_mgr.h>
 #endif
 #include <android-base/file.h>
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
 #include "mkbootimg/bootimg.h"
 #endif
 
@@ -82,7 +82,7 @@ void property_init() {
 
 static int check_mac_perms(const char *name, char *sctx, struct ucred *cr)
 {
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     char *tctx = NULL;
     int result = 0;
     property_audit_data audit_data;
@@ -107,7 +107,7 @@ static int check_mac_perms(const char *name, char *sctx, struct ucred *cr)
     return result;
 #else
     return 1;
-#endif /* !LAARID_APROPD */
+#endif /* !__LAARID__ */
 }
 
 static int check_control_mac_perms(const char *name, char *sctx, struct ucred *cr)
@@ -189,7 +189,7 @@ static int property_set_impl(const char* name, const char* value) {
     if (!is_legal_property_name(name, namelen)) return -1;
     if (valuelen >= PROPERTY_VALUE_MAX) return -1;
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     if (strcmp("selinux.reload_policy", name) == 0 && strcmp("1", value) == 0) {
         if (selinux_reload_policy() != 0) {
             ERROR("Failed to reload policy\n");
@@ -303,7 +303,7 @@ static void handle_property_set_fd()
             return;
         }
 
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
         getpeercon(s, &source_ctx);
 #endif
 
@@ -330,7 +330,7 @@ static void handle_property_set_fd()
             // the property is written to memory.
             close(s);
         }
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
         freecon(source_ctx);
 #endif
         break;
@@ -500,7 +500,7 @@ void load_persist_props(void) {
 }
 
 void load_recovery_id_prop() {
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
     std::string ro_hardware = property_get("ro.hardware");
     if (ro_hardware.empty()) {
         ERROR("ro.hardware not set - unable to load recovery id\n");
@@ -536,7 +536,7 @@ void load_recovery_id_prop() {
     }
 
     close(fd);
-#endif /* !LAARID_APROPD */
+#endif /* !__LAARID__ */
 }
 
 void load_system_props() {

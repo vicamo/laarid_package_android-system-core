@@ -66,7 +66,8 @@ endif
 	%reldir%/logger_write.c \
 	%reldir%/logprint.c \
 	%reldir%/pmsg_reader.c \
-	%reldir%/pmsg_writer.c
+	%reldir%/pmsg_writer.c \
+	%reldir%/uio.c
 
 pkgconfig_DATA += \
 	%reldir%/android-log-$(LAARID_API_VERSION).pc

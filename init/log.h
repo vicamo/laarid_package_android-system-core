@@ -27,7 +27,7 @@
 #define VERBOSE(x...) init_klog_write(KLOG_DEBUG_LEVEL, x)
 
 void init_klog_write(int level, const char* fmt, ...) __attribute__ ((format(printf, 2, 3)));
-#if !defined(LAARID_APROPD)
+#if !defined(__LAARID__)
 int selinux_klog_callback(int level, const char* fmt, ...) __attribute__ ((format(printf, 2, 3)));
 #endif
 

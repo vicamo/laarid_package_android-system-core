@@ -25,6 +25,7 @@
 #include <memory>
 #include <string>
 
+#include <bionic/bionic.h> // getprogname
 #include <android-base/file.h>
 #include <android-base/strings.h>
 #include <cutils/sched_policy.h>
@@ -38,8 +39,6 @@
 #include <utils/threads.h>
 
 #include <pcrecpp.h>
-
-#include <bionic/bionic.h> // getprogname
 
 #define DEFAULT_MAX_ROTATED_LOGS 4
 

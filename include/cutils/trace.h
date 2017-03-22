@@ -30,9 +30,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <bionic/bionic.h>
-
 #include <cutils/compiler.h>
+#include <cutils/fs.h>
 
 __BEGIN_DECLS
 

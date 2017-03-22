@@ -17,6 +17,8 @@
 #ifndef ANDROID_TRACE_H
 #define ANDROID_TRACE_H
 
+#if defined(__ANDROID__) || defined(__LAARID__)
+
 #include <fcntl.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -56,5 +58,12 @@ private:
 };
 
 }; // namespace android
+
+#else // !__ANDROID__ && !__LAARID__
+
+#define ATRACE_NAME(...)
+#define ATRACE_CALL(...)
+
+#endif // __ANDROID__ || __LAARID__
 
 #endif // ANDROID_TRACE_H

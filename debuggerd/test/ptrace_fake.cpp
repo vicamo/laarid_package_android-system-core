@@ -29,7 +29,11 @@ void ptrace_set_fake_getsiginfo(const siginfo_t& si) {
   g_fake_si = si;
 }
 
+#if !defined(__BIONIC__)
 extern "C" long ptrace_fake(enum __ptrace_request request, ...) {
+#else
+extern "C" long ptrace_fake(int request, ...) {
+#endif
   if (request == PTRACE_GETSIGINFO) {
     if (g_fake_si.si_signo == 0) {
       errno = EFAULT;
