@@ -1,3 +1,12 @@
+android-system-core (0.0.17) stretch; urgency=low
+
+  * libcutils: support systemd socket activation
+  * liblog, libpackagelistparser: fix file location
+  * build logd/logcat
+  * libuidmap: add uid segmentation macros
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Fri, 24 Mar 2017 21:20:12 +0800
+
 android-system-core (0.0.16) stretch; urgency=low
 
   * libandroid-uidmap: convert stage2
