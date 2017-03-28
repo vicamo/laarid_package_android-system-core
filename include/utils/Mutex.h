@@ -63,7 +63,7 @@ public:
     // lock if possible; returns 0 on success, error otherwise
     status_t    tryLock();
 
-#if defined(__ANDROID__)
+#if defined(__USE_XOPEN2K)
     // lock the mutex, but don't wait longer than timeoutMilliseconds.
     // Returns 0 on success, TIMED_OUT for failure due to timeout expiration.
     //
@@ -132,7 +132,7 @@ inline void Mutex::unlock() {
 inline status_t Mutex::tryLock() {
     return -pthread_mutex_trylock(&mMutex);
 }
-#if defined(__ANDROID__)
+#if defined(__USE_XOPEN2K)
 inline status_t Mutex::timedLock(nsecs_t timeoutNs) {
     const struct timespec ts = {
         /* .tv_sec = */ static_cast<time_t>(timeoutNs / 1000000000),
