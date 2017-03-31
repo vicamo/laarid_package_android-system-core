@@ -1,3 +1,10 @@
+android-system-core (0.0.18) stretch; urgency=low
+
+  * eliminate changes between aosp by adding __LAARID__
+  * libsync: install sw_sync.h as well
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Fri, 31 Mar 2017 20:53:42 +0800
+
 android-system-core (0.0.17) stretch; urgency=low
 
   * libcutils: support systemd socket activation
