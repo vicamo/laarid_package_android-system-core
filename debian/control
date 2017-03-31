@@ -6,7 +6,7 @@ Build-Depends:
  dh-autoreconf,
  dh-systemd <!pkg.android-system-core.stage2>,
  autoconf-archive,
- pkg-config,
+ pkg-config (>= 0.24),
  libandroid-base0-dev (>= 0.0.12) <pkg.android-system-core.stage2>,
  libandroid-bionic0-dev (>= 0.1.6),
  libandroid-cutils0-dev (>= 0.0.12) <pkg.android-system-core.stage2>,
