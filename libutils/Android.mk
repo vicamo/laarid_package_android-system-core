@@ -32,11 +32,9 @@ lib_LTLIBRARIES += \
 %canon_reldir%_libandroid_utils_la_LIBADD = \
 	$(PTHREAD_LIBS) -lpthread \
 	$(LOG_LIBS) \
-	$(CUTILS_LIBS) \
-	libbacktrace/libandroid-backtrace.la
+	$(CUTILS_LIBS)
 %canon_reldir%_libandroid_utils_la_SOURCES = \
 	%reldir%/BlobCache.cpp \
-	%reldir%/CallStack.cpp \
 	%reldir%/FileMap.cpp \
 	%reldir%/JenkinsHash.cpp \
 	%reldir%/LinearTransform.cpp \
@@ -44,7 +42,6 @@ lib_LTLIBRARIES += \
 	%reldir%/Looper.cpp \
 	%reldir%/NativeHandle.cpp \
 	%reldir%/Printer.cpp \
-	%reldir%/ProcessCallStack.cpp \
 	%reldir%/PropertyMap.cpp \
 	%reldir%/RefBase.cpp \
 	%reldir%/SharedBuffer.cpp \
@@ -61,6 +58,16 @@ lib_LTLIBRARIES += \
 	%reldir%/Unicode.cpp \
 	%reldir%/VectorImpl.cpp \
 	%reldir%/misc.cpp
+
+if CPU_S390X
+# nothing
+else
+%canon_reldir%_libandroid_utils_la_LIBADD += \
+	libbacktrace/libandroid-backtrace.la
+%canon_reldir%_libandroid_utils_la_SOURCES += \
+	%reldir%/CallStack.cpp \
+	%reldir%/ProcessCallStack.cpp
+endif
 
 pkgconfig_DATA += \
 	%reldir%/android-utils-$(LAARID_API_VERSION).pc

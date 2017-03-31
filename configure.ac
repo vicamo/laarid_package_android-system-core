@@ -84,6 +84,7 @@ cpu_mips=no
 cpu_mips64=no
 cpu_x86=no
 cpu_x86_64=no
+cpu_s390x=no
 case "$host_cpu" in
   arm*)
     cpu_arm=yes
@@ -103,6 +104,9 @@ case "$host_cpu" in
   x86_64 | amd64)
     cpu_x86_64=yes
     ;;
+  s390x)
+    cpu_s390x=yes
+    ;;
 esac
 
 AM_CONDITIONAL(CPU_ARM, test "$cpu_arm" = "yes")
@@ -111,6 +115,7 @@ AM_CONDITIONAL(CPU_MIPS, test "$cpu_mips" = "yes")
 AM_CONDITIONAL(CPU_MIPS64, test "$cpu_mips64" = "yes")
 AM_CONDITIONAL(CPU_X86, test "$cpu_x86" = "yes")
 AM_CONDITIONAL(CPU_X86_64, test "$cpu_x86_64" = "yes")
+AM_CONDITIONAL(CPU_S390X, test "$cpu_s390x" = "yes")
 
 AM_PROG_AR
 AM_PROG_AS
@@ -213,11 +218,12 @@ AS_IF([test "x${with_stage}" = x1], [
   AC_SUBST([UIDMAP_REQUIRED_VERSION])
   PKG_CHECK_MODULES([UIDMAP], [android-uidmap-$UIDMAP_API_VERSION >= $UIDMAP_REQUIRED_VERSION])
 
-  UNWIND_API_VERSION=0.0
-  UNWIND_REQUIRED_VERSION=0.0.3
-  AC_SUBST([UNWIND_API_VERSION])
-  AC_SUBST([UNWIND_REQUIRED_VERSION])
-  PKG_CHECK_MODULES([UNWIND], [android-unwind-$UNWIND_API_VERSION >= $UNWIND_REQUIRED_VERSION])
+  AS_IF([test x$cpu_s390x != xyes],
+    [UNWIND_API_VERSION=0.0
+    UNWIND_REQUIRED_VERSION=0.0.3
+    AC_SUBST([UNWIND_API_VERSION])
+    AC_SUBST([UNWIND_REQUIRED_VERSION])
+    PKG_CHECK_MODULES([UNWIND], [android-unwind-$UNWIND_API_VERSION >= $UNWIND_REQUIRED_VERSION])])
 ])
 
 # Required headers
@@ -399,33 +405,39 @@ AC_SUBST([SYSCONFDIR], ${sysconfdir})
 AC_CONFIG_FILES([
   Makefile
 ])
-AS_IF([test "x${with_stage}" = x1], [AC_CONFIG_FILES([
-  base/android-base-$LAARID_API_VERSION.pc
-  include/cutils/sockets.h
-  include/log/event_tag_map.h
-  libcutils/android-cutils-$LAARID_API_VERSION.pc
-  libdiskconfig/android-diskconfig-$LAARID_API_VERSION.pc
-  libion/android-ion-$LAARID_API_VERSION.pc
-  liblog/android-log-$LAARID_API_VERSION.pc
-  libmincrypt/android-mincrypt-$LAARID_API_VERSION.pc
-  libnetutils/android-netutils-$LAARID_API_VERSION.pc
-  libpackagelistparser/android-packagelistparser-$LAARID_API_VERSION.pc
-  libpackagelistparser/include/packagelistparser/packagelistparser.h
-  libsparse/android-sparse-$LAARID_API_VERSION.pc
-  libsuspend/android-suspend-$LAARID_API_VERSION.pc
-  libsync/android-sync-$LAARID_API_VERSION.pc
-  libsysutils/android-sysutils-$LAARID_API_VERSION.pc
-  libuidmap/android-uidmap-$LAARID_API_VERSION.pc
-  libusbhost/android-usbhost-$LAARID_API_VERSION.pc
-  logwrapper/android-logwrap-$LAARID_API_VERSION.pc
+AS_IF([test "x${with_stage}" = x1],
+  [AC_CONFIG_FILES([
+    base/android-base-$LAARID_API_VERSION.pc
+    include/cutils/sockets.h
+    include/log/event_tag_map.h
+    libcutils/android-cutils-$LAARID_API_VERSION.pc
+    libdiskconfig/android-diskconfig-$LAARID_API_VERSION.pc
+    libion/android-ion-$LAARID_API_VERSION.pc
+    liblog/android-log-$LAARID_API_VERSION.pc
+    libmincrypt/android-mincrypt-$LAARID_API_VERSION.pc
+    libnetutils/android-netutils-$LAARID_API_VERSION.pc
+    libpackagelistparser/android-packagelistparser-$LAARID_API_VERSION.pc
+    libpackagelistparser/include/packagelistparser/packagelistparser.h
+    libsparse/android-sparse-$LAARID_API_VERSION.pc
+    libsuspend/android-suspend-$LAARID_API_VERSION.pc
+    libsync/android-sync-$LAARID_API_VERSION.pc
+    libsysutils/android-sysutils-$LAARID_API_VERSION.pc
+    libuidmap/android-uidmap-$LAARID_API_VERSION.pc
+    libusbhost/android-usbhost-$LAARID_API_VERSION.pc
+    logwrapper/android-logwrap-$LAARID_API_VERSION.pc
   ])],
-  [test "x${with_stage}" = x2], [AC_CONFIG_FILES([
-  libbacktrace/android-backtrace-$LAARID_API_VERSION.pc
-  libnativebridge/android-nativebridge-$LAARID_API_VERSION.pc
-  libnativeloader/android-nativeloader-$LAARID_API_VERSION.pc
-  libpixelflinger/android-pixelflinger-$LAARID_API_VERSION.pc
-  libprocessgroup/android-processgroup-$LAARID_API_VERSION.pc
-  libutils/android-utils-$LAARID_API_VERSION.pc
-  libziparchive/android-ziparchive-$LAARID_API_VERSION.pc
-  ])])
+  [test "x${with_stage}" = x2],
+  [AC_CONFIG_FILES([
+    libnativebridge/android-nativebridge-$LAARID_API_VERSION.pc
+    libnativeloader/android-nativeloader-$LAARID_API_VERSION.pc
+    libpixelflinger/android-pixelflinger-$LAARID_API_VERSION.pc
+    libprocessgroup/android-processgroup-$LAARID_API_VERSION.pc
+    libutils/android-utils-$LAARID_API_VERSION.pc
+    libziparchive/android-ziparchive-$LAARID_API_VERSION.pc
+  ])
+  AM_COND_IF([CPU_S390X],,
+    [AC_CONFIG_FILES([
+      libbacktrace/android-backtrace-$LAARID_API_VERSION.pc
+    ])]
+  )])
 AC_OUTPUT

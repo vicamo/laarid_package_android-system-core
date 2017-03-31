@@ -152,7 +152,6 @@ if WITH_STAGE_2
 	%reldir%/utils/BitSet.h \
 	%reldir%/utils/BlobCache.h \
 	%reldir%/utils/ByteOrder.h \
-	%reldir%/utils/CallStack.h \
 	%reldir%/utils/Compat.h \
 	%reldir%/utils/Condition.h \
 	%reldir%/utils/Debug.h \
@@ -171,7 +170,6 @@ if WITH_STAGE_2
 	%reldir%/utils/Mutex.h \
 	%reldir%/utils/NativeHandle.h \
 	%reldir%/utils/Printer.h \
-	%reldir%/utils/ProcessCallStack.h \
 	%reldir%/utils/PropertyMap.h \
 	%reldir%/utils/RWLock.h \
 	%reldir%/utils/RefBase.h \
@@ -194,6 +192,14 @@ if WITH_STAGE_2
 	%reldir%/utils/ashmem.h \
 	%reldir%/utils/misc.h \
 	%reldir%/utils/threads.h
+
+if CPU_S390X
+# nothing
+else
+%canon_reldir%_libandroid_utils_inc_HEADERS += \
+	%reldir%/utils/CallStack.h \
+	%reldir%/utils/ProcessCallStack.h
+endif
 
 # HEADERS: android/ziparchive
 # ---------------------------

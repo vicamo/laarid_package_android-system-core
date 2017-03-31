@@ -13,7 +13,7 @@ Build-Depends:
  libandroid-log0-dev (>= 0.0.12) <pkg.android-system-core.stage2>,
  libandroid-nativehelper0-dev (>= 0.0.4) <pkg.android-system-core.stage2>,
  libandroid-uidmap0-dev (>= 0.0.16~stage1) <pkg.android-system-core.stage2>,
- libandroid-unwind8-dev (>= 0.0.3) <pkg.android-system-core.stage2>,
+ libandroid-unwind8-dev (>= 0.0.3) [amd64 i386 arm64 armel armhf mips mips64el mipsel ppc64el] <pkg.android-system-core.stage2>,
  libatomic1 <!pkg.android-system-core.stage2>,
  libgtest-dev <!debbuildopt.nocheck>,
  libltdl-dev,
@@ -59,7 +59,7 @@ Package: libandroid-backtrace0
 Build-Profiles: <pkg.android-system-core.stage2>
 Priority: extra
 Section: libs
-Architecture: any
+Architecture: amd64 i386 arm64 armel armhf mips mips64el mipsel ppc64el
 Multi-Arch: same
 Pre-Depends:
  ${misc:Pre-Depends},
@@ -73,7 +73,7 @@ Package: libandroid-backtrace0-dev
 Build-Profiles: <pkg.android-system-core.stage2>
 Priority: extra
 Section: libdevel
-Architecture: any
+Architecture: amd64 i386 arm64 armel armhf mips mips64el mipsel ppc64el
 Multi-Arch: same
 Depends:
  libandroid-backtrace0 (= ${binary:Version}),

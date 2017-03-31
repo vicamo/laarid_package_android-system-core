@@ -194,8 +194,12 @@ public:
             }
         }
         if (dumpStack) {
+#if defined(__s390x__)
             ALOGE("above errors at:");
             CallStack stack(LOG_TAG);
+#else
+            ALOGE("call stack unavailable.");
+#endif
         }
     }
 
