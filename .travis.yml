@@ -35,11 +35,6 @@ env:
   - BINTRAY_COMPONENT=main
   - BINTRAY_DESC="Android system core libraries"
 
-matrix:
-  fast_finish: true
-  allow_failures:
-  - env: JOB_STAGE=2 JOB_ARCH=s390x
-
 branches:
   only:
   - master
