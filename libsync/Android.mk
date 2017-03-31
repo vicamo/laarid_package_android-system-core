@@ -16,7 +16,8 @@ lib_LTLIBRARIES += \
 
 %canon_reldir%_libandroid_sync_incdir = $(androidincdir)/sync
 %canon_reldir%_libandroid_sync_inc_HEADERS = \
-	%reldir%/include/sync/sync.h
+	%reldir%/include/sync/sync.h \
+	%reldir%/sw_sync.h
 
 bin_PROGRAMS += \
 	%reldir%/sync_test
