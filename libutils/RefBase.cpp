@@ -194,7 +194,7 @@ public:
             }
         }
         if (dumpStack) {
-#if defined(__s390x__)
+#if defined(WITH_ANDROID_UNWIND)
             ALOGE("above errors at:");
             CallStack stack(LOG_TAG);
 #else

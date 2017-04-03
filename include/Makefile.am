@@ -193,9 +193,7 @@ if WITH_STAGE_2
 	%reldir%/utils/misc.h \
 	%reldir%/utils/threads.h
 
-if CPU_S390X
-# nothing
-else
+if WITH_ANDROID_UNWIND
 %canon_reldir%_libandroid_utils_inc_HEADERS += \
 	%reldir%/utils/CallStack.h \
 	%reldir%/utils/ProcessCallStack.h

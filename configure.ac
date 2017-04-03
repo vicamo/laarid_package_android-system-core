@@ -84,7 +84,6 @@ cpu_mips=no
 cpu_mips64=no
 cpu_x86=no
 cpu_x86_64=no
-cpu_s390x=no
 case "$host_cpu" in
   arm*)
     cpu_arm=yes
@@ -104,9 +103,6 @@ case "$host_cpu" in
   x86_64 | amd64)
     cpu_x86_64=yes
     ;;
-  s390x)
-    cpu_s390x=yes
-    ;;
 esac
 
 AM_CONDITIONAL(CPU_ARM, test "$cpu_arm" = "yes")
@@ -115,7 +111,6 @@ AM_CONDITIONAL(CPU_MIPS, test "$cpu_mips" = "yes")
 AM_CONDITIONAL(CPU_MIPS64, test "$cpu_mips64" = "yes")
 AM_CONDITIONAL(CPU_X86, test "$cpu_x86" = "yes")
 AM_CONDITIONAL(CPU_X86_64, test "$cpu_x86_64" = "yes")
-AM_CONDITIONAL(CPU_S390X, test "$cpu_s390x" = "yes")
 
 AM_PROG_AR
 AM_PROG_AS
@@ -218,13 +213,20 @@ AS_IF([test "x${with_stage}" = x1], [
   AC_SUBST([UIDMAP_REQUIRED_VERSION])
   PKG_CHECK_MODULES([UIDMAP], [android-uidmap-$UIDMAP_API_VERSION >= $UIDMAP_REQUIRED_VERSION])
 
-  AS_IF([test x$cpu_s390x != xyes],
-    [UNWIND_API_VERSION=0.0
-    UNWIND_REQUIRED_VERSION=0.0.3
-    AC_SUBST([UNWIND_API_VERSION])
-    AC_SUBST([UNWIND_REQUIRED_VERSION])
-    PKG_CHECK_MODULES([UNWIND], [android-unwind-$UNWIND_API_VERSION >= $UNWIND_REQUIRED_VERSION])])
+  UNWIND_API_VERSION=0.0
+  UNWIND_REQUIRED_VERSION=0.0.3
+  AC_SUBST([UNWIND_API_VERSION])
+  AC_SUBST([UNWIND_REQUIRED_VERSION])
+  UTILS_PC_ADDITIONAL_REQURIES_PRIVATE=
+  PKG_CHECK_MODULES([UNWIND], [android-unwind-$UNWIND_API_VERSION >= $UNWIND_REQUIRED_VERSION],
+    [AC_DEFINE([WITH_ANDROID_UNWIND], [1],
+      [Define if you have libandroid-unwind libraries and header files.])
+    UTILS_PC_ADDITIONAL_REQURIES_PRIVATE=", android-backtrace-${LAARID_API_VERSION}"],
+    [# no op])
+  AC_SUBST([UTILS_PC_ADDITIONAL_REQURIES_PRIVATE])
 ])
+
+AM_CONDITIONAL([WITH_ANDROID_UNWIND], [test -n "${UNWIND_LIBS}"])
 
 # Required headers
 # ----------------
@@ -435,7 +437,7 @@ AS_IF([test "x${with_stage}" = x1],
     libutils/android-utils-$LAARID_API_VERSION.pc
     libziparchive/android-ziparchive-$LAARID_API_VERSION.pc
   ])
-  AM_COND_IF([CPU_S390X],,
+  AM_COND_IF([WITH_ANDROID_UNWIND],
     [AC_CONFIG_FILES([
       libbacktrace/android-backtrace-$LAARID_API_VERSION.pc
     ])]

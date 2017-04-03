@@ -59,9 +59,7 @@ lib_LTLIBRARIES += \
 	%reldir%/VectorImpl.cpp \
 	%reldir%/misc.cpp
 
-if CPU_S390X
-# nothing
-else
+if WITH_ANDROID_UNWIND
 %canon_reldir%_libandroid_utils_la_LIBADD += \
 	libbacktrace/libandroid-backtrace.la
 %canon_reldir%_libandroid_utils_la_SOURCES += \

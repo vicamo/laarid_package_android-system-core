@@ -723,7 +723,7 @@ Multi-Arch: same
 Depends:
  libandroid-utils0 (= ${binary:Version}),
  libandroid-bionic0-dev (>= 0.1.6),
- libandroid-backtrace0-dev,
+ libandroid-backtrace0-dev [amd64 i386 arm64 armel armhf mips mips64el mipsel ppc64el],
  libandroid-log0-dev (>= 0.0.12),
  libandroid-cutils0-dev (>= 0.0.12),
  ${misc:Depends},
