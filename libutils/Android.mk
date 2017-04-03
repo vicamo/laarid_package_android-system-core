@@ -31,6 +31,7 @@ lib_LTLIBRARIES += \
 	$(libtool_opts)
 %canon_reldir%_libandroid_utils_la_LIBADD = \
 	$(PTHREAD_LIBS) -lpthread \
+	$(BIONIC_LIBS) \
 	$(LOG_LIBS) \
 	$(CUTILS_LIBS)
 %canon_reldir%_libandroid_utils_la_SOURCES = \
