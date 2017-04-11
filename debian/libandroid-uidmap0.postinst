@@ -16,7 +16,7 @@ set -e
 
 case "$1" in
   configure)
-    for username in log shell system; do
+    for username in graphics log shell system; do
       if ! getent passwd $username >/dev/null; then
         adduser --disabled-password  --quiet --system \
           --home / --no-create-home \

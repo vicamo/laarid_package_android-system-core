@@ -93,6 +93,11 @@ gid_t android_gid_get(const char* name);
 #define AUID_ROOT 0
 #define AGID_ROOT 0
 
+ANDROID_UID_GETTER_DECL(graphics);
+#define AUID_GRAPHICS ANDROID_UID_GETTER_NAME(graphics)()
+ANDROID_GID_GETTER_DECL(graphics);
+#define AGID_GRAPHICS ANDROID_GID_GETTER_NAME(graphics)()
+
 ANDROID_UID_GETTER_DECL(log);
 #define AUID_LOG ANDROID_UID_GETTER_NAME(log)()
 ANDROID_GID_GETTER_DECL(log);

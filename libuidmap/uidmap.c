@@ -36,6 +36,9 @@ gid_t android_gid_get(const char* name)
   return UINT_MAX;
 }
 
+ANDROID_UID_GETTER_IMPL(graphics)
+ANDROID_GID_GETTER_IMPL(graphics)
+
 ANDROID_UID_GETTER_IMPL(log)
 ANDROID_GID_GETTER_IMPL(log)
 
