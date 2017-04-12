@@ -1,0 +1,12 @@
+libandroid-suspend.so.0 libandroid-suspend0 #MINVER#
+ autosuspend_autosleep_init@Base 0.0.20
+ autosuspend_autosleep_ops@Base 0.0.20
+ autosuspend_disable@Base 0.0.20
+ autosuspend_earlysuspend_init@Base 0.0.20
+ autosuspend_earlysuspend_ops@Base 0.0.20
+ autosuspend_enable@Base 0.0.20
+ autosuspend_wakeup_count_init@Base 0.0.20
+ autosuspend_wakeup_count_ops@Base 0.0.20
+ set_wakeup_callback@Base 0.0.20
+ start_earlysuspend_thread@Base 0.0.20
+ wait_for_fb_wake@Base 0.0.20

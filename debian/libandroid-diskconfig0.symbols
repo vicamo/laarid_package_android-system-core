@@ -1,0 +1,15 @@
+libandroid-diskconfig.so.0 libandroid-diskconfig0 #MINVER#
+ alloc_wl@Base 0.0.20
+ apply_disk_config@Base 0.0.20
+ config_mbr@Base 0.0.20
+ dump_disk_config@Base 0.0.20
+ find_mbr_part@Base 0.0.20
+ find_part@Base 0.0.20
+ find_part_device@Base 0.0.20
+ free_wl@Base 0.0.20
+ load_diskconfig@Base 0.0.20
+ process_disk_config@Base 0.0.20
+ wlist_add@Base 0.0.20
+ wlist_commit@Base 0.0.20
+ wlist_free@Base 0.0.20
+ write_raw_image@Base 0.0.20

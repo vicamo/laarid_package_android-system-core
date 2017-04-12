@@ -1,0 +1,10 @@
+libandroid-nativeloader.so.0 libandroid-nativeloader0 #MINVER#
+ _ZN7android17OpenNativeLibraryEP7_JNIEnviPKcP8_jobjectP8_jstring@Base 0.0.20
+ _ZN7android17ResetNativeLoaderEv@Base 0.0.20
+ _ZN7android18CloseNativeLibraryEPv@Base 0.0.20
+ _ZN7android22InitializeNativeLoaderEv@Base 0.0.20
+ _ZN7android26CreateClassLoaderNamespaceEP7_JNIEnviP8_jobjectbP8_jstringS5_@Base 0.0.20
+ _ZN7android26FindNamespaceByClassLoaderEP7_JNIEnvP8_jobject@Base 0.0.20
+ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE19_M_emplace_back_auxIJRKS5_EEEvDpOT_@Base 0.0.20
+ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED1Ev@Base 0.0.20
+ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev@Base 0.0.20

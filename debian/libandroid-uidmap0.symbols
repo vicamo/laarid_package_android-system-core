@@ -1,0 +1,12 @@
+libandroid-uidmap.so.0 libandroid-uidmap0 #MINVER#
+ android_gid_get@Base 0.0.20
+ android_gid_get_graphics@Base 0.0.20
+ android_gid_get_log@Base 0.0.20
+ android_gid_get_readproc@Base 0.0.20
+ android_gid_get_shell@Base 0.0.20
+ android_gid_get_system@Base 0.0.20
+ android_uid_get@Base 0.0.20
+ android_uid_get_graphics@Base 0.0.20
+ android_uid_get_log@Base 0.0.20
+ android_uid_get_shell@Base 0.0.20
+ android_uid_get_system@Base 0.0.20

@@ -1,0 +1,3 @@
+libandroid-packagelistparser.so.0 libandroid-packagelistparser0 #MINVER#
+ packagelist_free@Base 0.0.20
+ packagelist_parse@Base 0.0.20

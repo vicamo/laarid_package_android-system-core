@@ -1,0 +1,16 @@
+libandroid-nativebridge.so.0 libandroid-nativebridge0 #MINVER#
+ _ZN7_JNIEnv20CallStaticVoidMethodEP7_jclassP10_jmethodIDz@Base 0.0.20
+ _ZN7android16LoadNativeBridgeEPKcPKNS_28NativeBridgeRuntimeCallbacksE@Base 0.0.20
+ _ZN7android17NativeBridgeErrorEv@Base 0.0.20
+ _ZN7android17NeedsNativeBridgeEPKc@Base 0.0.20
+ _ZN7android18UnloadNativeBridgeEv@Base 0.0.20
+ _ZN7android21NativeBridgeAvailableEv@Base 0.0.20
+ _ZN7android22InitializeNativeBridgeEP7_JNIEnvPKc@Base 0.0.20
+ _ZN7android22NativeBridgeGetVersionEv@Base 0.0.20
+ _ZN7android23NativeBridgeInitializedEv@Base 0.0.20
+ _ZN7android23NativeBridgeIsSupportedEPKc@Base 0.0.20
+ _ZN7android23NativeBridgeLoadLibraryEPKci@Base 0.0.20
+ _ZN7android25NativeBridgeGetTrampolineEPvPKcS2_j@Base 0.0.20
+ _ZN7android25PreInitializeNativeBridgeEPKcS1_@Base 0.0.20
+ _ZN7android26NativeBridgeNameAcceptableEPKc@Base 0.0.20
+ _ZN7android28NativeBridgeGetSignalHandlerEi@Base 0.0.20

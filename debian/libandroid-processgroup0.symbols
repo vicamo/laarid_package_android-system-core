@@ -1,0 +1,5 @@
+libandroid-processgroup.so.0 libandroid-processgroup0 #MINVER#
+ createProcessGroup@Base 0.0.20
+ init_path_flag@Base 0.0.20
+ killProcessGroup@Base 0.0.20
+ removeAllProcessGroups@Base 0.0.20

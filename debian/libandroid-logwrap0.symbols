@@ -1,0 +1,2 @@
+libandroid-logwrap.so.0 libandroid-logwrap0 #MINVER#
+ android_fork_execvp_ext@Base 0.0.20

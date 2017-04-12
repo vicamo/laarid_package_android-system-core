@@ -1,0 +1,9 @@
+libandroid-sync.so.0 libandroid-sync0 #MINVER#
+ sw_sync_fence_create@Base 0.0.20
+ sw_sync_timeline_create@Base 0.0.20
+ sw_sync_timeline_inc@Base 0.0.20
+ sync_fence_info@Base 0.0.20
+ sync_fence_info_free@Base 0.0.20
+ sync_merge@Base 0.0.20
+ sync_pt_info@Base 0.0.20
+ sync_wait@Base 0.0.20
