@@ -53,9 +53,10 @@ before_install:
     /bin/bash
 
 install:
+- ${DOCKER_EXEC_ROOT} chown --recursive laarid:laarid ${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}}
 - ${DOCKER_EXEC_ROOT} apt-get update -qq
 - |
-  ${DOCKER_EXEC_ROOT} \
+  ${DOCKER_EXEC} \
     env "DEB_BUILD_PROFILES=pkg.$(dpkg-parsechangelog | grep ^Source: | awk '{print $2}').stage${JOB_STAGE}" \
     mk-build-deps --install --remove \
       --host-arch ${JOB_ARCH} \
@@ -75,6 +76,7 @@ script:
 - git status | grep 'working tree clean'
 
 before_deploy:
+- sudo chown --recursive $(id --user):$(id --group) ${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}}
 - |
   cat .bintray.json.in | \
     sed -e "s#@BINTRAY_PACKAGE@#$(dpkg-parsechangelog | grep ^Source: | awk '{print $2}')#g" \
