@@ -50,15 +50,12 @@ addons:
 
 cache:
 - apt
-- ccache
 
 before_install:
-- test -d "${HOME}/.ccache/${JOB_ARCH}" || mkdir -p "${HOME}/.ccache/${JOB_ARCH}"
 - |
   sudo docker run --detach --interactive --tty \
     --name test_container \
     --volume ${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}}:${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}} \
-    --volume ${HOME}/.ccache/${JOB_ARCH}:/home/laarid/.ccache \
     --workdir ${TRAVIS_BUILD_DIR} \
     --add-host dl.bintray.com:$(nslookup dl.bintray.com | grep -m1 -A1 Name: | grep Address: | awk '{print $2}') \
     laarid/devel:${JOB_ARCH} \
@@ -75,7 +72,6 @@ install:
       --tool 'apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends -y --allow-unauthenticated'
 
 script:
-- ${DOCKER_EXEC} ccache --zero-stats
 - |
   ${DOCKER_EXEC} env \
       "DEB_BUILD_OPTIONS=nocheck" \
@@ -84,7 +80,6 @@ script:
       --build-profiles=pkg.$(cat debian/control | grep ^Source: | awk '{print $2}').stage${JOB_STAGE},nocheck \
       -i -us -uc -b;
 - ${DOCKER_EXEC} make -C build -j $(nproc) .gitignore distcheck
-- ${DOCKER_EXEC} ccache --show-stats
 - git status
 - git status | grep 'working tree clean'
 
