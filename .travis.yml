@@ -1,4 +1,3 @@
-dist: trusty
 sudo: required
 services:
 - docker
@@ -40,18 +39,9 @@ branches:
   - master
   - release
 
-addons:
-  apt:
-    sources:
-    - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ devel universe'
-    packages:
-    - binfmt-support
-    - qemu-user-static
-
-cache:
-- apt
-
 before_install:
+- docker run --rm --privileged vicamo/binfmt-qemu:latest
+- cat /proc/sys/fs/binfmt_misc/qemu-*
 - |
   sudo docker run --detach --interactive --tty \
     --name test_container \
