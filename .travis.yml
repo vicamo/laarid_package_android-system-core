@@ -26,9 +26,8 @@ env:
   - JOB_STAGE=2 JOB_ARCH=ppc64el
   - JOB_STAGE=2 JOB_ARCH=s390x
   global:
-  - DOCKER_EXEC_ROOT="sudo docker exec --interactive --tty --user root test_container"
-  - DOCKER_EXEC="sudo docker exec --interactive --tty test_container"
-  - DOCKER_EXEC_NOTTY="sudo docker exec test_container"
+  - DOCKER_EXEC_ROOT="docker exec --user root test_container"
+  - DOCKER_EXEC="docker exec test_container"
   - BINTRAY_USER=laarid
   - BINTRAY_REPO=main
   - BINTRAY_COMPONENT=main
@@ -45,7 +44,7 @@ before_install:
 - |
   export JOB_SUITE=$(dpkg-parsechangelog | grep ^Distribution: | awk '{print $2}')
 - |
-  sudo docker run --detach --interactive --tty \
+  docker run --detach --tty \
     --name test_container \
     --volume ${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}}:${TRAVIS_BUILD_DIR%${TRAVIS_REPO_SLUG}} \
     --workdir ${TRAVIS_BUILD_DIR} \
