@@ -1,3 +1,9 @@
+android-system-core (0.0.20+buster1) buster; urgency=low
+
+  * rebuild for buster.
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Mon, 30 Oct 2017 23:01:13 +0800
+
 android-system-core (0.0.20) stretch; urgency=low
 
   * add 'graphics' system user/group.
