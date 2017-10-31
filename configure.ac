@@ -119,6 +119,10 @@ AC_PROG_CXX
 PKG_PROG_PKG_CONFIG([0.24])
 LAARID_CHECK_CCACHE
 
+AX_CHECK_COMPILE_FLAG([-Werror -Werror=format-truncation],
+  [CFLAGS="$CFLAGS -Wno-error=format-truncation"
+   CXXFLAGS="$CXXFLAGS -Wno-error=format-truncation"])
+
 # libtool versioning
 # ------------------
 LT_INIT
