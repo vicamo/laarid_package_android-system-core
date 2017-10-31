@@ -33,6 +33,12 @@ env:
   - BINTRAY_COMPONENT=main
   - BINTRAY_DESC="Android system core libraries"
 
+matrix:
+  fast_finish: true
+  allow_failures:
+  - env: JOB_STAGE=1 JOB_ARCH=mips64el
+  - env: JOB_STAGE=2 JOB_ARCH=mips64el
+
 addons:
   apt:
     packages:
