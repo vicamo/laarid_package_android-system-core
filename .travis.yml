@@ -91,7 +91,7 @@ before_deploy:
         -e "s#@BINTRAY_DESC@#${BINTRAY_DESC}#g" \
         -e "s#@GITHUB_REPO@#${TRAVIS_REPO_SLUG}#g" \
         -e "s#@BINTRAY_VERSION@#$(dpkg-parsechangelog | grep ^Version: | awk '{print $2}')#g" \
-        -e "s#@BINTRAY_RELEASE_DATE@#$(ate -Iseconds --date="$(dpkg-parsechangelog | grep ^Date: | cut -d ' ' -f 2-)")#g" \
+        -e "s#@BINTRAY_RELEASE_DATE@#$(date -Iseconds --date="$(dpkg-parsechangelog | grep ^Date: | cut -d ' ' -f 2-)")#g" \
         -e "s#@BINTRAY_OUTDIR@#$(dirname ${TRAVIS_BUILD_DIR})#g" \
         -e "s#@BINTRAY_POOLABBR@#$(dpkg-parsechangelog | grep ^Source: | awk '{print $2}' | cut -c1)#g" \
         -e "s#@BINTRAY_SUITE@#${JOB_SUITE}#g" \
